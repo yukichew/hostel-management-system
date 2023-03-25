@@ -1,5 +1,5 @@
 package javaassignment.admin;
 
-public class Admin {
+public class AdminLogin {
     
 }

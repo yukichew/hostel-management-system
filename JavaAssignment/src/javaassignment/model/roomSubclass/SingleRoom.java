@@ -13,5 +13,4 @@ public class SingleRoom extends Room {
     public RoomType getRoomType() {
         return RoomType.SINGLE;
     }
-   
 }
