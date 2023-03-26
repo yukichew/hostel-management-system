@@ -1,4 +1,4 @@
-package javaassignment.model.roomSubclass;
+package javaassignment.model.roomsubclass;
 
 import javaassignment.model.Room;
 import javaassignment.model.RoomType;

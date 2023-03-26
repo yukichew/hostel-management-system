@@ -2,8 +2,8 @@ package javaassignment.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javaassignment.model.roomSubclass.SingleRoom;
-import javaassignment.model.roomSubclass.TwinRoom;
+import javaassignment.model.roomsubclass.SingleRoom;
+import javaassignment.model.roomsubclass.TwinRoom;
 
 public class Hostel {
 
