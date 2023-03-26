@@ -33,5 +33,5 @@ public class CustomerBookingRoom {
 
     public void setSubtotalPrice(double subtotalPrice) {
         this.subtotalPrice = subtotalPrice;
-    }
+    }  
 }
