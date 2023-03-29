@@ -1,5 +1,9 @@
 package javaassignment.model;
 
+/**
+ *
+ * @author yukichew
+ */
 public class Admin {
     private int adminID;
     private String adminPassword;

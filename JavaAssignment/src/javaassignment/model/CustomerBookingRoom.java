@@ -1,5 +1,9 @@
 package javaassignment.model;
 
+/**
+ *
+ * @author yukichew
+ */
 public class CustomerBookingRoom {
     private Room room;
     private int quantity;

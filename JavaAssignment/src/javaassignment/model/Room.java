@@ -1,5 +1,10 @@
 package javaassignment.model;
 
+/**
+ *
+ * @author yukichew
+ */
+
 public abstract class Room {
 
     private int roomNumber;

@@ -1,17 +1,21 @@
 package javaassignment.model;
 
+/**
+ *
+ * @author yukichew
+ */
 public class Student {
 
     private String studentID;
     private String studentName;
-    private String studentNIC;
+    private int studentNIC;
     private String studentPassword;
     private String studentGender;
     private String studentContact;
     private String studentAddress;
     private double studentBalance;
 
-    public Student(String studentID, String studentName, String studentNIC,
+    public Student(String studentID, String studentName, int studentNIC,
             String studentPassword, String studentGender, String studentContact,
             String studentAddress) {
         this.studentID = studentID;
@@ -40,11 +44,11 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public String getStudentNIC() {
+    public int getStudentNIC() {
         return studentNIC;
     }
 
-    public void setStudentNIC(String studentNIC) {
+    public void setStudentNIC(int studentNIC) {
         this.studentNIC = studentNIC;
     }
 

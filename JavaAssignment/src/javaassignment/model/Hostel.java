@@ -5,6 +5,10 @@ import java.util.List;
 import javaassignment.model.roomsubclass.SingleRoom;
 import javaassignment.model.roomsubclass.TwinRoom;
 
+/**
+ *
+ * @author yukichew
+ */
 public class Hostel {
 
     private List<Room> rooms;

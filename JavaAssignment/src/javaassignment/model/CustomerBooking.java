@@ -1,5 +1,10 @@
 package javaassignment.model;
 
+/**
+ *
+ * @author yukichew
+ */
+
 public class CustomerBooking {
     private int bookingID;
     private double totalPrice;
