@@ -12,6 +12,42 @@ public class StudentRegister extends javax.swing.JFrame {
         initComponents();
     }
 
+    public String getGen() {
+        if (male.isSelected()) {
+            return "Male";
+
+        } else if (female.isSelected()) {
+            return "Female";
+
+        } else {
+            return null;
+        }
+    }
+
+    public void checkContact(String studentContact) {
+        if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0') {
+            JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
+
+        } else {
+            Boolean check = true;
+            for (int a = 0; a < studentContact.length(); a++) {
+                if (a == 0 && studentContact.charAt(a) == '-') {
+                    continue;
+                }
+
+                if (!Character.isDigit(studentContact.charAt(a))) {
+                    check = false;
+                    JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
+                    break;
+                }
+            }
+        }
+    }
+
+    public void checkNIC(int studentNIC) {
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,7 +96,7 @@ public class StudentRegister extends javax.swing.JFrame {
         lblstudentAddress.setText("Address: ");
 
         lblRegister.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
-        lblRegister.setText("Register");
+        lblRegister.setText("REGISTER");
 
         gender.add(female);
         female.setText("Female");
@@ -116,21 +152,20 @@ public class StudentRegister extends javax.swing.JFrame {
                                 .addComponent(male)))
                         .addGap(53, 53, 53))))
             .addGroup(RegisterLayout.createSequentialGroup()
-                .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(RegisterLayout.createSequentialGroup()
-                        .addGap(216, 216, 216)
-                        .addComponent(lblRegister))
-                    .addGroup(RegisterLayout.createSequentialGroup()
-                        .addGap(222, 222, 222)
-                        .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(222, 222, 222)
+                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(227, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegisterLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblRegister)
+                .addGap(195, 195, 195))
         );
         RegisterLayout.setVerticalGroup(
             RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RegisterLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(lblRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblstudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfstudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,53 +231,24 @@ public class StudentRegister extends javax.swing.JFrame {
         try {
             String studentID = tfstudentID.getText();
             String studentName = tfstudentName.getText();
-            String studentNIC = tfstudentNIC.getText();
+            String studentIC = tfstudentNIC.getText();
+            int studentNIC = Integer.parseInt(studentIC);
             String studentPassword = tfstudentPassword.getText();
             String studentContact = tfstudentContact.getText();
             String studentAddress = tfstudentAddress.getText();
 
             String studentGender = getGen();
 
-            if (studentID.isEmpty() || studentName.isEmpty() || studentNIC.isEmpty() || studentPassword.isEmpty() || studentContact.isEmpty()
+            if (studentID.isEmpty() || studentName.isEmpty() || studentIC.isEmpty() || studentPassword.isEmpty() || studentContact.isEmpty()
                     || studentGender.isEmpty() || studentAddress.isEmpty()) {
                 throw new Exception();
 
-            } else {
-                if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0') {
-                    JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
+            }
 
-                } else {
-                    Boolean check = true;
-                    for (int a = 0; a < studentContact.length(); a++) {
-                        if (a == 0 && studentContact.charAt(a) == '-') {
-                            continue;
-                        }
+            checkContact(studentContact);
 
-                        if (!Character.isDigit(studentContact.charAt(a))) {
-                            check = false;
-                            JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
-                            break;
-                        }
-                    }
-                }
-                
-                if (studentNIC.length() < 12 || studentContact.charAt(0) != '0') {
-                    JOptionPane.showMessageDialog(Register, "Please enter your NIC correctly.");
-
-                } else {
-                    Boolean check = true;
-                    for (int a = 0; a < studentNIC.length(); a++) {
-                        if (a == 0 && studentNIC.charAt(a) == '-') {
-                            continue;
-                        }
-
-                        if (!Character.isDigit(studentNIC.charAt(a))) {
-                            check = false;
-                            JOptionPane.showMessageDialog(Register, "Please enter your NIC correctly");
-                            break;
-                        }
-                    }
-                }
+            if (studentIC.length() < 12) {
+                JOptionPane.showMessageDialog(Register, "Please enter your NIC correctly.");
             }
 
         } catch (Exception ex) {
@@ -281,17 +287,6 @@ public class StudentRegister extends javax.swing.JFrame {
         });
     }
 
-    public String getGen() {
-        if (male.isSelected()) {
-            return "Male";
-
-        } else if (female.isSelected()) {
-            return "Female";
-
-        } else {
-            return null;
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Register;
