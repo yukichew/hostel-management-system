@@ -1,5 +1,9 @@
 package javaassignment.student;
 
+import static javaassignment.HostelManagementSystem.loginf;
+import static javaassignment.HostelManagementSystem.registerf;
+import javaassignment.model.Student;
+import javaassignment.student.studentservices.StudentData;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,30 +26,6 @@ public class StudentRegister extends javax.swing.JFrame {
         } else {
             return null;
         }
-    }
-
-    public void checkContact(String studentContact) {
-        if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0') {
-            JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
-
-        } else {
-            Boolean check = true;
-            for (int a = 0; a < studentContact.length(); a++) {
-                if (a == 0 && studentContact.charAt(a) == '-') {
-                    continue;
-                }
-
-                if (!Character.isDigit(studentContact.charAt(a))) {
-                    check = false;
-                    JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
-                    break;
-                }
-            }
-        }
-    }
-
-    public void checkNIC(int studentNIC) {
-
     }
 
     @SuppressWarnings("unchecked")
@@ -71,8 +51,11 @@ public class StudentRegister extends javax.swing.JFrame {
         female = new javax.swing.JRadioButton();
         male = new javax.swing.JRadioButton();
         registerButton = new javax.swing.JButton();
+        lblLogin = new javax.swing.JLabel();
+        loginLink = new javax.swing.JLabel("<html><u>Login</u></html>");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Student Register");
         setBounds(new java.awt.Rectangle(550, 300, 0, 0));
 
         lblstudentID.setText("Student ID:");
@@ -116,6 +99,15 @@ public class StudentRegister extends javax.swing.JFrame {
             }
         });
 
+        lblLogin.setText("Already have an account?");
+
+        loginLink.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginLinkMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout RegisterLayout = new javax.swing.GroupLayout(Register);
         Register.setLayout(RegisterLayout);
         RegisterLayout.setHorizontalGroup(
@@ -151,14 +143,21 @@ public class StudentRegister extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(male)))
                         .addGap(53, 53, 53))))
-            .addGroup(RegisterLayout.createSequentialGroup()
-                .addGap(222, 222, 222)
-                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(227, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegisterLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblRegister)
                 .addGap(195, 195, 195))
+            .addGroup(RegisterLayout.createSequentialGroup()
+                .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RegisterLayout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RegisterLayout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(lblLogin)
+                        .addGap(31, 31, 31)
+                        .addComponent(loginLink)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         RegisterLayout.setVerticalGroup(
             RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +195,11 @@ public class StudentRegister extends javax.swing.JFrame {
                     .addComponent(lblstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addGap(32, 32, 32)
+                .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLogin)
+                    .addComponent(loginLink))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,7 +219,8 @@ public class StudentRegister extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(618, 606));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfstudentIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfstudentIDActionPerformed
@@ -231,67 +235,101 @@ public class StudentRegister extends javax.swing.JFrame {
         try {
             String studentID = tfstudentID.getText();
             String studentName = tfstudentName.getText();
-            String studentIC = tfstudentNIC.getText();
-            int studentNIC = Integer.parseInt(studentIC);
+            String studentNIC = tfstudentNIC.getText();
             String studentPassword = tfstudentPassword.getText();
+            String studentGender = getGen();
             String studentContact = tfstudentContact.getText();
             String studentAddress = tfstudentAddress.getText();
 
-            String studentGender = getGen();
-
-            if (studentID.isEmpty() || studentName.isEmpty() || studentIC.isEmpty() || studentPassword.isEmpty() || studentContact.isEmpty()
-                    || studentGender.isEmpty() || studentAddress.isEmpty()) {
+            if (studentID.isEmpty() || studentName.isEmpty() || studentPassword.isEmpty() || studentGender.isEmpty() || studentAddress.isEmpty()) {
                 throw new Exception();
 
-            }
+            } else {
+                if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0') {
+                    JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
 
-            checkContact(studentContact);
+                } else {
 
-            if (studentIC.length() < 12) {
-                JOptionPane.showMessageDialog(Register, "Please enter your NIC correctly.");
+                    Boolean checkContact = true;
+                    for (int a = 0; a < studentContact.length(); a++) {
+                        if (a == 0 && studentContact.charAt(a) == '-') {
+                            continue;
+                        }
+
+                        if (!Character.isDigit(studentContact.charAt(a))) {
+                            checkContact = false;
+                            JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
+                            break;
+                        }
+                    }
+
+                    if (checkContact) {
+
+                        if (studentNIC.length() != 12) {
+                            JOptionPane.showMessageDialog(Register, "Please enter your NIC correctly.");
+
+                        } else {
+                            Boolean checkNIC = true;
+                            for (int a = 0; a < studentNIC.length(); a++) {
+                                if (a == 0 && studentNIC.charAt(a) == '-') {
+                                    continue;
+                                }
+
+                                if (!Character.isDigit(studentNIC.charAt(a))) {
+                                    checkContact = false;
+                                    JOptionPane.showMessageDialog(Register, "Please enter a valid NIC.");
+                                    break;
+                                }
+                            }
+
+                            if (checkNIC) {
+                                Student found = StudentData.checkStudentID(studentID);
+
+                                if (found == null) {
+                                    StudentData.students.add(new Student(studentID, studentName,
+                                            studentNIC, studentPassword, studentGender, studentContact, studentAddress));
+                                    StudentData.write();
+                                    JOptionPane.showMessageDialog(Register,
+                                            "Congratulations! You have now a member of XX System.");
+                                    loginf.setVisible(true);
+                                    tfstudentName.setText("");
+                                    tfstudentID.setText("");
+                                    tfstudentContact.setText("");
+                                    tfstudentNIC.setText("");
+                                    tfstudentPassword.setText("");
+                                    tfstudentAddress.setText("");
+                                    gender.clearSelection();
+                                    registerf.setVisible(false);
+                                    
+                                } else {
+                                    JOptionPane.showMessageDialog(Register,
+                                            "You already have an account.");
+                                }
+
+                            }
+                        }
+                    }
+                }
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(Register, "Please ensure that you have entered all your details correctly.");
+            JOptionPane.showMessageDialog(Register,
+                    "Please ensure that you have entered all your details correctly.");
 
         }
     }//GEN-LAST:event_registerButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StudentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StudentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StudentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StudentRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StudentRegister().setVisible(true);
-            }
-        });
-    }
+    private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
+        registerf.setVisible(false);
+        loginf.setVisible(true);
+    }//GEN-LAST:event_loginLinkMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Register;
     private javax.swing.JRadioButton female;
     private javax.swing.ButtonGroup gender;
+    private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblRegister;
     private javax.swing.JLabel lblstudentAddress;
     private javax.swing.JLabel lblstudentContact;
@@ -300,6 +338,7 @@ public class StudentRegister extends javax.swing.JFrame {
     private javax.swing.JLabel lblstudentNIC;
     private javax.swing.JLabel lblstudentName;
     private javax.swing.JLabel lblstudentPassword;
+    private javax.swing.JLabel loginLink;
     private javax.swing.JRadioButton male;
     private javax.swing.JButton registerButton;
     private javax.swing.JTextField tfstudentAddress;

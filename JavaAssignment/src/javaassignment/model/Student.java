@@ -8,14 +8,14 @@ public class Student {
 
     private String studentID;
     private String studentName;
-    private int studentNIC;
+    private String studentNIC;
     private String studentPassword;
     private String studentGender;
     private String studentContact;
     private String studentAddress;
     private double studentBalance;
 
-    public Student(String studentID, String studentName, int studentNIC,
+    public Student(String studentID, String studentName, String studentNIC,
             String studentPassword, String studentGender, String studentContact,
             String studentAddress) {
         this.studentID = studentID;
@@ -44,11 +44,11 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public int getStudentNIC() {
+    public String getStudentNIC() {
         return studentNIC;
     }
 
-    public void setStudentNIC(int studentNIC) {
+    public void setStudentNIC(String studentNIC) {
         this.studentNIC = studentNIC;
     }
 
