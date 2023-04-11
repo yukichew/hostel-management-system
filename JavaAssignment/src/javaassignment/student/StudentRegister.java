@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
  * @author yukichew
  */
 public class StudentRegister extends javax.swing.JFrame {
+    
+    private double studentBalance = 0;
 
     public StudentRegister() {
         initComponents();
@@ -287,7 +289,8 @@ public class StudentRegister extends javax.swing.JFrame {
 
                                 if (found == null) {
                                     StudentData.students.add(new Student(studentID, studentName,
-                                            studentNIC, studentPassword, studentGender, studentContact, studentAddress));
+                                            studentNIC, studentPassword, studentGender, studentContact, studentAddress, studentBalance));
+                                    
                                     StudentData.write();
                                     JOptionPane.showMessageDialog(Register,
                                             "Congratulations! You have now a member of XX System.");

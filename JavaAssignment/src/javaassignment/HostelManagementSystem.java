@@ -10,7 +10,6 @@ public class HostelManagementSystem {
     public static StudentRegister registerf = new StudentRegister();
     public static StudentLogin loginf = new StudentLogin();
     
-    
     public static Student studentlogin;
 
     public static void main(String[] args) {

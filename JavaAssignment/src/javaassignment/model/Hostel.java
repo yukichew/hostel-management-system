@@ -17,8 +17,8 @@ public class Hostel {
     private int numberOfDeluxeTwinRooms;
     private int numberOfTwinRooms;
 
-    public Hostel() {
-        rooms = new ArrayList<>();
+    public Hostel(ArrayList<Room> rooms) {
+        this.rooms = rooms;
         numberOfDeluxeSingleRooms = 0;
         numberOfSingleRooms = 0;
         numberOfDeluxeTwinRooms = 0;
@@ -42,6 +42,7 @@ public class Hostel {
     }
 
     public int getNumberOfSingleRooms() {
+//        read txt file size
         return numberOfSingleRooms;
     }
 

@@ -14,10 +14,10 @@ public class Student {
     private String studentContact;
     private String studentAddress;
     private double studentBalance;
-
+    
     public Student(String studentID, String studentName, String studentNIC,
             String studentPassword, String studentGender, String studentContact,
-            String studentAddress) {
+            String studentAddress, double studentBalance) {
         this.studentID = studentID;
         this.studentName = studentName;
         this.studentNIC = studentNIC;
@@ -25,7 +25,7 @@ public class Student {
         this.studentGender = studentGender;
         this.studentContact = studentContact;
         this.studentAddress = studentAddress;
-        studentBalance = 0;
+        this.studentBalance = studentBalance;
     }
 
     public String getStudentID() {

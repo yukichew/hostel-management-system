@@ -1,6 +1,7 @@
 package javaassignment.student.studentservices;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class StudentData {
         try {
             BufferedReader br = new BufferedReader(new FileReader("student.txt"));
             while ((line = br.readLine()) != null) {
-                String[] studentLine = line.split("/");
+                String[] studentLine = line.split(";");
                 String studentID = studentLine[0];
                 String studentName = studentLine[1];
                 String studentNIC = studentLine[2];
@@ -27,9 +28,10 @@ public class StudentData {
                 String studentGender = studentLine[4];
                 String studentContact = studentLine[5];
                 String studentAddress = studentLine[6];
+                double studentBalance = Double.parseDouble(studentLine[7]);
 
                 students.add(new Student(studentID, studentName, studentNIC,
-                        studentPassword, studentGender, studentContact, studentAddress));
+                        studentPassword, studentGender, studentContact, studentAddress, studentBalance));
             }
         } catch (Exception e) {
             System.out.println("Error in read ...");
@@ -39,13 +41,15 @@ public class StudentData {
 
     public static void write() {
         try {
-            PrintWriter a = new PrintWriter("student.txt");
+            BufferedWriter writer = new BufferedWriter(new PrintWriter("student.txt"));
             for (int i = 0; i < students.size(); i++) {
                 Student s = students.get(i);
-                a.println(s.getStudentID() + "/" + s.getStudentName() + "/" + s.getStudentNIC() + "/" + s.getStudentPassword() + "/" + s.getStudentGender() + "/"
-                        + s.getStudentContact() + "/" + s.getStudentAddress());
+                writer.write(s.getStudentID() + ";" + s.getStudentName() + ";" + s.getStudentNIC()
+                        + ";" + s.getStudentPassword() + ";" + s.getStudentGender() + ";"
+                        + s.getStudentContact() + ";" + s.getStudentAddress() + ";" + s.getStudentBalance());
+                writer.newLine();
             }
-            a.close();
+            writer.close();
         } catch (Exception e) {
             System.out.println("Error in write ...");
         }

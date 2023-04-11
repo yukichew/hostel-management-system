@@ -14,8 +14,11 @@ import javax.swing.JOptionPane;
  */
 public class StudentLogin extends javax.swing.JFrame {
 
+    public static StudentDashboard studentDashboard = new StudentDashboard();
+
     public StudentLogin() {
         initComponents();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -196,7 +199,7 @@ public class StudentLogin extends javax.swing.JFrame {
                     HostelManagementSystem.studentlogin = found;
                     JOptionPane.showMessageDialog(login,
                             "Congratulations! You have now successfully login to our system!");
-//                    userdashp.userdashboard.setVisible(true);
+                    studentDashboard.setVisible(true);
                     tfstudentID.setText("");
                     tfstudentPassword.setText("");
                     loginf.setVisible(false);
