@@ -60,7 +60,10 @@ public class RoomData {
             BufferedWriter writer = new BufferedWriter(new FileWriter("room.txt"));
             for (int i = 0; i < rooms.size(); i++) {
                 Room room = rooms.get(i);
-                writer.write(room.getRoomDetails());
+                writer.write(room.getRoomNumber() + ";"
+                        + room.getRoomPrice() + ";"
+                        + room.getRoomCapacity() + ";"
+                        + room.getRoomType());
                 writer.newLine();
             }
             writer.close();
@@ -68,7 +71,7 @@ public class RoomData {
             System.out.println("Error in write ...");
         }
     }
-    
+
     public static Room checkAvailableRoomType(RoomType roomtype) {
         for (Room room : rooms) {
             if (room.getRoomType() == roomtype && room.isRoomAvailability()) {
@@ -76,6 +79,18 @@ public class RoomData {
             }
         }
         return null;
+    }
+
+    public static Room checkRoom(int roomNumber) {
+        Room found = null;
+        for (int i = 0; i < rooms.size(); i++) {
+            Room s = rooms.get(i);
+            if (roomNumber == s.getRoomNumber()) {
+                found = s;
+                break;
+            }
+        }
+        return found;
     }
 
 }

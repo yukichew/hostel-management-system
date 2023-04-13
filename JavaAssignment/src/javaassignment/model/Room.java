@@ -58,11 +58,4 @@ public abstract class Room {
     }
 
     public abstract RoomType getRoomType();
-
-    public String getRoomDetails() {
-        return getRoomNumber() + ";"
-                + getRoomPrice() + ";"
-                + getRoomCapacity() + ";"
-                + getRoomType();
-    }
 }

@@ -1,7 +1,6 @@
 package javaassignment.student;
 
-import static javaassignment.student.StudentLogin.studentDashboard;
-import javaassignment.student.studentservices.StudentBookingData;
+import javaassignment.HostelManagementSystem;
 
 /**
  *
@@ -11,7 +10,17 @@ public class StudentDashboard extends javax.swing.JFrame {
 
     public StudentDashboard() {
         initComponents();
-        StudentBookingData.read();
+        showStudentDetails();
+    }
+    
+    private void showStudentDetails(){
+        lbluser.setText(HostelManagementSystem.studentlogin.getStudentID());
+        lblstudentID.setText(HostelManagementSystem.studentlogin.getStudentID());
+        lblstudentName.setText(HostelManagementSystem.studentlogin.getStudentName());
+        lblstudentNIC.setText(HostelManagementSystem.studentlogin.getStudentNIC());
+        lblstudentGender.setText(HostelManagementSystem.studentlogin.getStudentGender());
+        lblstudentContact.setText(HostelManagementSystem.studentlogin.getStudentContact());
+        lblstudentAddress.setText(HostelManagementSystem.studentlogin.getStudentAddress());
     }
 
     @SuppressWarnings("unchecked")
@@ -85,7 +94,7 @@ public class StudentDashboard extends javax.swing.JFrame {
 
         myApplicationsButton.setBackground(new java.awt.Color(255, 255, 255));
         myApplicationsButton.setForeground(new java.awt.Color(153, 153, 153));
-        myApplicationsButton.setText("My Applications");
+        myApplicationsButton.setText("My Application");
         myApplicationsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 myApplicationsButtonActionPerformed(evt);
@@ -95,6 +104,11 @@ public class StudentDashboard extends javax.swing.JFrame {
         editProfileButton.setBackground(new java.awt.Color(255, 255, 255));
         editProfileButton.setForeground(new java.awt.Color(153, 153, 153));
         editProfileButton.setText("Edit Profile");
+        editProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProfileButtonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
@@ -250,20 +264,28 @@ public class StudentDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void myApplicationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myApplicationsButtonActionPerformed
-        // TODO add your handling code here:
+       StudentApplicationHistory studentApplicationHistory = new StudentApplicationHistory();
+       studentApplicationHistory.setVisible(true);
+       this.setVisible(false);
     }//GEN-LAST:event_myApplicationsButtonActionPerformed
 
     private void hostelApplicationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hostelApplicationButtonActionPerformed
         HostelBooking hostelBooking = new HostelBooking();
         hostelBooking.setVisible(true);
-        studentDashboard.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_hostelApplicationButtonActionPerformed
 
     private void transactionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionButtonActionPerformed
         StudentTransaction studentTransaction = new StudentTransaction();
         studentTransaction.setVisible(true);
-        studentDashboard.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_transactionButtonActionPerformed
+
+    private void editProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileButtonActionPerformed
+        StudentEditProfile studentEditProfile = new StudentEditProfile();
+        studentEditProfile.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_editProfileButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

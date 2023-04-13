@@ -8,10 +8,11 @@ import javaassignment.HostelManagementSystem;
 import javaassignment.model.Room;
 import javaassignment.model.RoomType;
 import javaassignment.model.StudentBooking;
-import static javaassignment.student.StudentLogin.studentDashboard;
 import javaassignment.student.studentservices.StudentBookingData;
 import javaassignment.student.studentservices.RoomData;
+import javaassignment.student.studentservices.StudentData;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -36,7 +37,7 @@ public final class HostelBooking extends javax.swing.JFrame {
             return "Available";
 
         } else {
-            return "Booked";
+            return "Occupied";
         }
     }
 
@@ -232,11 +233,12 @@ public final class HostelBooking extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        String selectedRoomType = (String) roomTypeCombo.getItemAt(roomTypeCombo.getSelectedIndex());
+
         try {
             int bookingId = StudentBookingData.getLastOrderID();
             int bookingID = ++bookingId;
 
-            String selectedRoomType = (String) roomTypeCombo.getItemAt(roomTypeCombo.getSelectedIndex());
             RoomType roomtype = checkRoomType(selectedRoomType);
             Room room = RoomData.checkAvailableRoomType(roomtype);
             double roomPrice = room.getRoomPrice();
@@ -249,22 +251,56 @@ public final class HostelBooking extends javax.swing.JFrame {
             StudentBooking found = StudentBookingData.checkStudentBooking(studentID);
 
             int roomNumber = room.getRoomNumber();
-
+            
             if (found == null) {
-                if (room != null) {
-//                    update room capacity
-                    int roomCapacity = room.getRoomCapacity();
-                    int roomcapacity = ++roomCapacity;
-                    room.setRoomCapacity(roomcapacity);
-                    RoomData.write();
+                if (room == null) {
+                    throw new Exception();
 
-                    StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice, bookingDate, studentID, roomNumber, contractPeriod));
-                    StudentBookingData.write();
-                    JOptionPane.showMessageDialog(hostelbooking,
-                            "Congratulations! Your room number is " + roomNumber);
                 } else {
-                    JOptionPane.showMessageDialog(hostelbooking,
-                            "Sorry, there are no available " + selectedRoomType + " at this time.");
+                    int option = JOptionPane.showConfirmDialog(hostelbooking, "Confirm booking?",
+                            "Booking Confirmation", YES_NO_OPTION);
+                    if (option == JOptionPane.YES_OPTION) {
+                        double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();
+                        
+                        if (studentBalance >= roomPrice) {
+                            int roomCapacity = room.getRoomCapacity();
+                            int roomcapacity = ++roomCapacity;
+                            room.setRoomCapacity(roomcapacity);
+                            RoomData.write();
+
+                            StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice,
+                                    bookingDate, studentID, roomNumber, contractPeriod));
+                            StudentBookingData.write();
+                            JOptionPane.showMessageDialog(hostelbooking,
+                                    "Congratulations! Your room number is " + roomNumber);
+                            double balance = studentBalance - roomPrice;
+                            HostelManagementSystem.studentlogin.setStudentBalance(balance);
+                            StudentData.write();
+
+                        } else {
+                            int a = JOptionPane.showConfirmDialog(hostelbooking, "Booking failed due to insufficient balance."
+                                    + " Please top up your APCard to proceed. Do you want to top up your balance now?", "Top Up Confirmation", YES_NO_OPTION);
+                            if (a == JOptionPane.YES_OPTION) {
+                                try {
+                                    String topUpAmount = JOptionPane.showInputDialog(hostelbooking,
+                                            "Insert amount that you want to top up into your APCard.");
+                                    Double amount = Double.parseDouble(topUpAmount);
+                                    if (amount <= 0) {
+                                        throw new Exception();
+                                        
+                                    } else {
+                                        HostelManagementSystem.studentlogin.setStudentBalance(amount);
+                                        JOptionPane.showMessageDialog(hostelbooking, "You have successfully top tup RM"
+                                                + amount + " into your APCard.");
+                                        StudentData.write();
+
+                                    }
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(hostelbooking, "Transaction Failed due to invalid amount.");
+                                }
+                            }
+                        }
+                    }
                 }
 
             } else {
@@ -274,12 +310,13 @@ public final class HostelBooking extends javax.swing.JFrame {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(hostelbooking,
-                    "Fail.");
+                    "Sorry, there are no available " + selectedRoomType + " at this time.");
         }
 
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        StudentDashboard studentDashboard = new StudentDashboard();
         studentDashboard.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed

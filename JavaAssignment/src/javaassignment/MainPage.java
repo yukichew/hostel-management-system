@@ -3,7 +3,6 @@ package javaassignment;
 import java.awt.Image;
 import static javaassignment.HostelManagementSystem.loginf;
 import static javaassignment.HostelManagementSystem.mainPage;
-import javaassignment.model.Hostel;
 import javaassignment.student.studentservices.RoomData;
 import javaassignment.student.studentservices.StudentData;
 import javax.swing.ImageIcon;
@@ -14,15 +13,13 @@ import javax.swing.ImageIcon;
  */
 public class MainPage extends javax.swing.JFrame {
 
-    public static Hostel hostel;
+//    public static Hostel hostel;
 
     public MainPage() {
         initComponents();
         scaleImage();       
         StudentData.read();
         RoomData.read();
-
-        hostel = new Hostel(RoomData.rooms);
     }
 
     public void scaleImage() {

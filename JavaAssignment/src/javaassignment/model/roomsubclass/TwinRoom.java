@@ -9,13 +9,6 @@ public class TwinRoom extends Room {
         super(roomNumber, roomPrice, roomCapacity);
     }
 
-//    public boolean isFullyOccupied() {
-//        return getRoomCapacity() == 2;
-//    }
-    public boolean hasOneSeatLeft() {
-        return getRoomCapacity() == 1;
-    }
-
     @Override
     public RoomType getRoomType() {
         return RoomType.TWINS;

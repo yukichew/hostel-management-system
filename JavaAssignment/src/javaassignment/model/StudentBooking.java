@@ -1,4 +1,5 @@
 package javaassignment.model;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -71,11 +72,12 @@ public class StudentBooking {
     public void setContractPeriod(int contractPeriod) {
         this.contractPeriod = contractPeriod;
     }
-
-    public String getContractEndDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+ 
+    public LocalDate getContractEndDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate startDate = LocalDate.parse(bookingDate, formatter);
         LocalDate endDate = startDate.plusMonths(contractPeriod);
-        return formatter.format(endDate);
+        return endDate;
     }
+    
 }

@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import javaassignment.model.Room;
 import javaassignment.model.StudentBooking;
 
 /**
@@ -55,17 +55,33 @@ public class StudentBookingData {
             System.out.println("Error in write ...");
         }
     }
-
+    
     public static StudentBooking checkStudentBooking(String studentID) {
         StudentBooking found = null;
+        LocalDate currentDate = LocalDate.now();
         for (int i = 0; i < studentsBooking.size(); i++) {
             StudentBooking s = studentsBooking.get(i);
+            LocalDate contractEndDate = s.getContractEndDate();
             if (studentID.equals(s.getStudentID())) {
-                found = s;
-                break;
+                if (currentDate.isBefore(contractEndDate)) {
+                    found = s;
+                    break;
+                }
             }
         }
         return found;
+    }
+
+//    return a lists that consists of all bookings that contains all records of the particular student
+    public static ArrayList<StudentBooking> checkStudentBookings(String studentID) {
+        ArrayList<StudentBooking> studentBookings = new ArrayList<StudentBooking>();
+        for (int i = 0; i < studentsBooking.size(); i++) {
+            StudentBooking s = studentsBooking.get(i);
+            if (studentID.equals(s.getStudentID())) {
+                studentBookings.add(s);
+            }
+        }
+        return studentBookings;
     }
 
     public static int getLastOrderID() {

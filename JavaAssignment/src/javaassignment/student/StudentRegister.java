@@ -1,6 +1,7 @@
 package javaassignment.student;
 
 import static javaassignment.HostelManagementSystem.loginf;
+import static javaassignment.HostelManagementSystem.mainPage;
 import static javaassignment.HostelManagementSystem.registerf;
 import javaassignment.model.Student;
 import javaassignment.student.studentservices.StudentData;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
  * @author yukichew
  */
 public class StudentRegister extends javax.swing.JFrame {
-    
+
     private double studentBalance = 0;
 
     public StudentRegister() {
@@ -47,18 +48,23 @@ public class StudentRegister extends javax.swing.JFrame {
         lblstudentContact = new javax.swing.JLabel();
         tfstudentContact = new javax.swing.JTextField();
         lblstudentAddress = new javax.swing.JLabel();
-        lblRegister = new javax.swing.JLabel();
         tfstudentPassword = new javax.swing.JPasswordField();
         tfstudentAddress = new javax.swing.JTextField();
         female = new javax.swing.JRadioButton();
         male = new javax.swing.JRadioButton();
         registerButton = new javax.swing.JButton();
-        lblLogin = new javax.swing.JLabel();
         loginLink = new javax.swing.JLabel("<html><u>Login</u></html>");
+        jPanel1 = new javax.swing.JPanel();
+        lblRegister = new javax.swing.JLabel();
+        backButton = new javax.swing.JButton();
+        showPassword = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Student Register");
         setBounds(new java.awt.Rectangle(550, 300, 0, 0));
+
+        Register.setBackground(new java.awt.Color(255, 255, 255));
 
         lblstudentID.setText("Student ID:");
 
@@ -80,9 +86,6 @@ public class StudentRegister extends javax.swing.JFrame {
 
         lblstudentAddress.setText("Address: ");
 
-        lblRegister.setFont(new java.awt.Font("Helvetica Neue", 0, 36)); // NOI18N
-        lblRegister.setText("REGISTER");
-
         gender.add(female);
         female.setText("Female");
         female.addActionListener(new java.awt.event.ActionListener() {
@@ -101,8 +104,6 @@ public class StudentRegister extends javax.swing.JFrame {
             }
         });
 
-        lblLogin.setText("Already have an account?");
-
         loginLink.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loginLink.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,63 +111,96 @@ public class StudentRegister extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        lblRegister.setFont(new java.awt.Font("Helvetica Neue", 1, 36)); // NOI18N
+        lblRegister.setForeground(new java.awt.Color(102, 102, 102));
+        lblRegister.setText("STUDENT REGISTER");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(lblRegister)
+                .addContainerGap(348, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(lblRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
+        showPassword.setText("Show Password");
+        showPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPasswordActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Already have an account? ");
+
         javax.swing.GroupLayout RegisterLayout = new javax.swing.GroupLayout(Register);
         Register.setLayout(RegisterLayout);
         RegisterLayout.setHorizontalGroup(
             RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RegisterLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(RegisterLayout.createSequentialGroup()
-                        .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblstudentContact, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(65, 65, 65)
-                        .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfstudentContact, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 50, Short.MAX_VALUE))
-                    .addGroup(RegisterLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
                         .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblstudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblstudentName, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblstudentNIC, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblstudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblstudentGender, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblstudentGender, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblstudentContact, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfstudentID)
-                                .addComponent(tfstudentName, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                                .addComponent(tfstudentNIC)
-                                .addComponent(tfstudentPassword))
+                            .addComponent(showPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfstudentID)
+                                    .addComponent(tfstudentName, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                    .addComponent(tfstudentNIC)
+                                    .addComponent(tfstudentPassword))
+                                .addComponent(tfstudentContact, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(RegisterLayout.createSequentialGroup()
                                 .addComponent(female)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(male)))
-                        .addGap(53, 53, 53))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegisterLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblRegister)
-                .addGap(195, 195, 195))
+                                .addComponent(male))))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(RegisterLayout.createSequentialGroup()
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(RegisterLayout.createSequentialGroup()
-                        .addGap(222, 222, 222)
+                        .addGap(138, 138, 138)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
                         .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(RegisterLayout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(lblLogin)
-                        .addGap(31, 31, 31)
+                        .addGap(109, 109, 109)
+                        .addComponent(jLabel1)
+                        .addGap(63, 63, 63)
                         .addComponent(loginLink)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         RegisterLayout.setVerticalGroup(
             RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RegisterLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(lblRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblstudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfstudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,60 +216,80 @@ public class StudentRegister extends javax.swing.JFrame {
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfstudentPassword)
                     .addComponent(lblstudentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(showPassword)
+                .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RegisterLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(lblstudentGender, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RegisterLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(female)
+                            .addComponent(male))))
                 .addGap(18, 18, 18)
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblstudentGender, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(female)
-                    .addComponent(male))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblstudentContact, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfstudentContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                    .addComponent(lblstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfstudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 34, Short.MAX_VALUE)
                 .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLogin)
-                    .addComponent(loginLink))
-                .addGap(21, 21, 21))
+                    .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(RegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(loginLink)
+                    .addComponent(jLabel1))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(Register, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Register, javax.swing.GroupLayout.PREFERRED_SIZE, 524, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(Register, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(Register, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(618, 606));
+        setSize(new java.awt.Dimension(522, 606));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfstudentIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfstudentIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfstudentIDActionPerformed
+    private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
+        if (showPassword.isSelected()) {
+            tfstudentPassword.setEchoChar((char) 0);
 
-    private void femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_femaleActionPerformed
+        } else {
+            Object echoCharObj = javax.swing.UIManager.get("PasswordField.echoChar");
+            if (echoCharObj != null) {
+                tfstudentPassword.setEchoChar((char) echoCharObj);
+            } else {
+                tfstudentPassword.setEchoChar('*');
+            }
+        }
+    }//GEN-LAST:event_showPasswordActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        registerf.setVisible(false);
+        mainPage.setVisible(true);
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
+        registerf.setVisible(false);
+        loginf.setVisible(true);
+    }//GEN-LAST:event_loginLinkMouseClicked
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         try {
-            String studentID = tfstudentID.getText();
+            String studentID = tfstudentID.getText().toUpperCase();
             String studentName = tfstudentName.getText();
             String studentNIC = tfstudentNIC.getText();
             String studentPassword = tfstudentPassword.getText();
@@ -290,7 +344,7 @@ public class StudentRegister extends javax.swing.JFrame {
                                 if (found == null) {
                                     StudentData.students.add(new Student(studentID, studentName,
                                             studentNIC, studentPassword, studentGender, studentContact, studentAddress, studentBalance));
-                                    
+
                                     StudentData.write();
                                     JOptionPane.showMessageDialog(Register,
                                             "Congratulations! You have now a member of XX System.");
@@ -303,7 +357,7 @@ public class StudentRegister extends javax.swing.JFrame {
                                     tfstudentAddress.setText("");
                                     gender.clearSelection();
                                     registerf.setVisible(false);
-                                    
+
                                 } else {
                                     JOptionPane.showMessageDialog(Register,
                                             "You already have an account.");
@@ -322,17 +376,22 @@ public class StudentRegister extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_registerButtonActionPerformed
 
-    private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
-        registerf.setVisible(false);
-        loginf.setVisible(true);
-    }//GEN-LAST:event_loginLinkMouseClicked
+    private void femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_femaleActionPerformed
+
+    private void tfstudentIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfstudentIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfstudentIDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Register;
+    private javax.swing.JButton backButton;
     private javax.swing.JRadioButton female;
     private javax.swing.ButtonGroup gender;
-    private javax.swing.JLabel lblLogin;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblRegister;
     private javax.swing.JLabel lblstudentAddress;
     private javax.swing.JLabel lblstudentContact;
@@ -344,6 +403,7 @@ public class StudentRegister extends javax.swing.JFrame {
     private javax.swing.JLabel loginLink;
     private javax.swing.JRadioButton male;
     private javax.swing.JButton registerButton;
+    private javax.swing.JCheckBox showPassword;
     private javax.swing.JTextField tfstudentAddress;
     private javax.swing.JTextField tfstudentContact;
     private javax.swing.JTextField tfstudentID;

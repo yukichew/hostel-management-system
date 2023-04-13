@@ -14,10 +14,6 @@ public class DeluxeTwin extends Room {
         return RoomType.DELUXETWINS;
     }
 
-    public boolean isFullyOccupied() {
-        return getRoomCapacity() == 2;
-    }
-
     public boolean hasOneSeatLeft() {
         return getRoomCapacity() == 1;
     }

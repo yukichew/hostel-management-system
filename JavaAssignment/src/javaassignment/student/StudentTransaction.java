@@ -1,7 +1,8 @@
 package javaassignment.student;
 
 import javaassignment.HostelManagementSystem;
-import static javaassignment.student.StudentLogin.studentDashboard;
+import javaassignment.student.studentservices.StudentData;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,6 +13,7 @@ public class StudentTransaction extends javax.swing.JFrame {
     public StudentTransaction() {
         initComponents();
         setstudentBalanceField();
+        lbluser.setText(HostelManagementSystem.studentlogin.getStudentID());
     }
 
     private void setstudentBalanceField() {
@@ -70,6 +72,7 @@ public class StudentTransaction extends javax.swing.JFrame {
         jLabel1.setText("Your balance in APCard :");
 
         topUpButton.setBackground(new java.awt.Color(204, 204, 255));
+        topUpButton.setForeground(new java.awt.Color(102, 102, 102));
         topUpButton.setText("Top Up");
         topUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,11 +134,29 @@ public class StudentTransaction extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        StudentDashboard studentDashboard = new StudentDashboard();
         studentDashboard.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void topUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topUpButtonActionPerformed
+        try {
+            String topUpAmount = JOptionPane.showInputDialog(studentTransactionPanel,
+                    "Insert amount that you want to top up into your APCard.");
+            Double amount = Double.parseDouble(topUpAmount);
+            if (amount <= 0) {
+                throw new Exception();
+//                JOptionPane.showMessageDialog(studentTransactionPanel, "Please enter a valid amount.");
+            } else {
+                HostelManagementSystem.studentlogin.setStudentBalance(amount);
+                JOptionPane.showMessageDialog(studentTransactionPanel, "You have successfully top tup RM"
+                        + amount + " into your APCard.");
+                StudentData.write();
+                setstudentBalanceField();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(studentTransactionPanel, "Transaction Failed due to invalid amount.");
+        }
 
     }//GEN-LAST:event_topUpButtonActionPerformed
 

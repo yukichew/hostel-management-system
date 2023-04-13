@@ -21,7 +21,7 @@ public class StudentData {
             BufferedReader br = new BufferedReader(new FileReader("student.txt"));
             while ((line = br.readLine()) != null) {
                 String[] studentLine = line.split(";");
-                String studentID = studentLine[0];
+                String studentID = studentLine[0].toUpperCase();
                 String studentName = studentLine[1];
                 String studentNIC = studentLine[2];
                 String studentPassword = studentLine[3];
@@ -44,7 +44,7 @@ public class StudentData {
             BufferedWriter writer = new BufferedWriter(new PrintWriter("student.txt"));
             for (int i = 0; i < students.size(); i++) {
                 Student s = students.get(i);
-                writer.write(s.getStudentID() + ";" + s.getStudentName() + ";" + s.getStudentNIC()
+                writer.write(s.getStudentID().toUpperCase() + ";" + s.getStudentName() + ";" + s.getStudentNIC()
                         + ";" + s.getStudentPassword() + ";" + s.getStudentGender() + ";"
                         + s.getStudentContact() + ";" + s.getStudentAddress() + ";" + s.getStudentBalance());
                 writer.newLine();
@@ -66,5 +66,7 @@ public class StudentData {
         }
         return found;
     }
+
+
 
 }

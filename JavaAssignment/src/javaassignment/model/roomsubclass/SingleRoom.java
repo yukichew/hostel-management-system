@@ -14,8 +14,4 @@ public class SingleRoom extends Room {
         return RoomType.SINGLE;
     }
 
-    public boolean isFullyOccupied() {
-        return getRoomCapacity() == 1;
-    }
-
 }
