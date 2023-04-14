@@ -1,6 +1,7 @@
 package javaassignment.student;
 
 import javaassignment.HostelManagementSystem;
+import static javaassignment.HostelManagementSystem.mainPage;
 
 /**
  *
@@ -31,6 +32,7 @@ public class StudentDashboard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lbluser = new javax.swing.JLabel();
+        logoutLink = new javax.swing.JLabel();
         hostelApplicationButton = new javax.swing.JButton();
         myApplicationsButton = new javax.swing.JButton();
         editProfileButton = new javax.swing.JButton();
@@ -62,6 +64,14 @@ public class StudentDashboard extends javax.swing.JFrame {
         lbluser.setForeground(new java.awt.Color(204, 204, 204));
         lbluser.setText("user");
 
+        logoutLink.setForeground(new java.awt.Color(255, 204, 204));
+        logoutLink.setText("Log Out");
+        logoutLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutLinkMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -71,7 +81,9 @@ public class StudentDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbluser)
-                .addGap(21, 21, 21))
+                .addGap(39, 39, 39)
+                .addComponent(logoutLink)
+                .addGap(27, 27, 27))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,7 +91,8 @@ public class StudentDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbluser))
+                    .addComponent(lbluser)
+                    .addComponent(logoutLink))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -287,6 +300,11 @@ public class StudentDashboard extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_editProfileButtonActionPerformed
 
+    private void logoutLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLinkMouseClicked
+        mainPage.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_logoutLinkMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton editProfileButton;
@@ -308,6 +326,7 @@ public class StudentDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lblstudentNIC;
     private javax.swing.JLabel lblstudentName;
     private javax.swing.JLabel lbluser;
+    private javax.swing.JLabel logoutLink;
     private javax.swing.JButton myApplicationsButton;
     private javax.swing.JPanel studentdashboard;
     private javax.swing.JButton transactionButton;

@@ -251,7 +251,7 @@ public final class HostelBooking extends javax.swing.JFrame {
             StudentBooking found = StudentBookingData.checkStudentBooking(studentID);
 
             int roomNumber = room.getRoomNumber();
-            
+
             if (found == null) {
                 if (room == null) {
                     throw new Exception();
@@ -261,7 +261,7 @@ public final class HostelBooking extends javax.swing.JFrame {
                             "Booking Confirmation", YES_NO_OPTION);
                     if (option == JOptionPane.YES_OPTION) {
                         double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();
-                        
+
                         if (studentBalance >= roomPrice) {
                             int roomCapacity = room.getRoomCapacity();
                             int roomcapacity = ++roomCapacity;
@@ -277,6 +277,10 @@ public final class HostelBooking extends javax.swing.JFrame {
                             HostelManagementSystem.studentlogin.setStudentBalance(balance);
                             StudentData.write();
 
+                            StudentTransaction studentTransaction = new StudentTransaction();
+                            studentTransaction.setVisible(true);
+                            this.setVisible(false);
+
                         } else {
                             int a = JOptionPane.showConfirmDialog(hostelbooking, "Booking failed due to insufficient balance."
                                     + " Please top up your APCard to proceed. Do you want to top up your balance now?", "Top Up Confirmation", YES_NO_OPTION);
@@ -287,7 +291,7 @@ public final class HostelBooking extends javax.swing.JFrame {
                                     Double amount = Double.parseDouble(topUpAmount);
                                     if (amount <= 0) {
                                         throw new Exception();
-                                        
+
                                     } else {
                                         HostelManagementSystem.studentlogin.setStudentBalance(amount);
                                         JOptionPane.showMessageDialog(hostelbooking, "You have successfully top tup RM"
