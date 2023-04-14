@@ -13,8 +13,6 @@ import javax.swing.ImageIcon;
  */
 public class MainPage extends javax.swing.JFrame {
 
-//    public static Hostel hostel;
-
     public MainPage() {
         initComponents();
         scaleImage();       

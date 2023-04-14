@@ -146,9 +146,9 @@ public class StudentTransaction extends javax.swing.JFrame {
             Double amount = Double.parseDouble(topUpAmount);
             if (amount <= 0) {
                 throw new Exception();
-//                JOptionPane.showMessageDialog(studentTransactionPanel, "Please enter a valid amount.");
             } else {
-                HostelManagementSystem.studentlogin.setStudentBalance(amount);
+                double totalBalance = HostelManagementSystem.studentlogin.getStudentBalance() + amount;
+                HostelManagementSystem.studentlogin.setStudentBalance(totalBalance);
                 JOptionPane.showMessageDialog(studentTransactionPanel, "You have successfully top tup RM"
                         + amount + " into your APCard.");
                 StudentData.write();
