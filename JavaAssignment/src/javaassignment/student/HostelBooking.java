@@ -266,6 +266,7 @@ public final class HostelBooking extends javax.swing.JFrame {
                             int roomCapacity = room.getRoomCapacity();
                             int roomcapacity = ++roomCapacity;
                             room.setRoomCapacity(roomcapacity);
+                            room.setRoomAvailability();
                             RoomData.write();
 
                             StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice,
@@ -279,7 +280,6 @@ public final class HostelBooking extends javax.swing.JFrame {
 
                             StudentApplicationHistory studentHistory = new StudentApplicationHistory();
                             studentHistory.setVisible(true);
-                            getHostelDetails();
                             this.setVisible(false);
 
                         } else {
