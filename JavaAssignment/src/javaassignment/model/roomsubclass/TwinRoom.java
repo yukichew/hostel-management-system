@@ -14,6 +14,7 @@ public class TwinRoom extends Room {
         return RoomType.TWINS;
     }
 
+    @Override
     public void setRoomAvailability() {
         if (getRoomCapacity() == 0 || getRoomCapacity() == 1) {
             setRoomAvailability(true);

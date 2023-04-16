@@ -52,9 +52,9 @@ public final class HostelBooking extends javax.swing.JFrame {
             return RoomType.DELUXESINGLE;
         } else if (roomType.equals("Single Room")) {
             return RoomType.SINGLE;
-        } else if (roomType.equals("Deluxe Twins Room")) {
+        } else if (roomType.equals("Deluxe Twin Room")) {
             return RoomType.DELUXETWINS;
-        } else if (roomType.equals("Twins Room")) {
+        } else if (roomType.equals("Twin Room")) {
             return RoomType.TWINS;
         } else {
             return null;
@@ -277,8 +277,9 @@ public final class HostelBooking extends javax.swing.JFrame {
                             HostelManagementSystem.studentlogin.setStudentBalance(balance);
                             StudentData.write();
 
-                            StudentTransaction studentTransaction = new StudentTransaction();
-                            studentTransaction.setVisible(true);
+                            StudentApplicationHistory studentHistory = new StudentApplicationHistory();
+                            studentHistory.setVisible(true);
+                            getHostelDetails();
                             this.setVisible(false);
 
                         } else {

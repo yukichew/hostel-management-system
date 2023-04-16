@@ -219,6 +219,7 @@ public class StudentLogin extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(login,
                             "Congratulations! You have now successfully login to APU Hostel Management System!"
                                     + "\nPlease top up your APCard before you book a room.");
+                    
                     StudentDashboard studentDashboard = new StudentDashboard();
                     studentDashboard.setVisible(true);
                     tfstudentID.setText("");

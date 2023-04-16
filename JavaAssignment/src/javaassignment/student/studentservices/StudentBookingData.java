@@ -33,8 +33,7 @@ public class StudentBookingData {
 
                 studentsBooking.add(new StudentBooking(bookingID, totalPrice, bookingDate, studentID, roomID, contractPeriod));
             }
-
-            System.out.println(studentsBooking.size());
+            
         } catch (Exception e) {
             System.out.println("Error in read ...");
             e.printStackTrace();

@@ -13,12 +13,8 @@ public class DeluxeTwin extends Room {
     public RoomType getRoomType() {
         return RoomType.DELUXETWINS;
     }
-
-    public boolean hasOneSeatLeft() {
-        return getRoomCapacity() == 1;
-    }
     
-    
+    @Override
     public void setRoomAvailability() {
         if (getRoomCapacity() == 0 || getRoomCapacity() == 1) {
             setRoomAvailability(true);

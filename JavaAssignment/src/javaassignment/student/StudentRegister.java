@@ -344,8 +344,8 @@ public class StudentRegister extends javax.swing.JFrame {
                                 if (found == null) {
                                     StudentData.students.add(new Student(studentID, studentName,
                                             studentNIC, studentPassword, studentGender, studentContact, studentAddress, studentBalance));
-
                                     StudentData.write();
+                                    
                                     JOptionPane.showMessageDialog(Register,
                                             "Congratulations! You have now a member of XX System.");
                                     loginf.setVisible(true);

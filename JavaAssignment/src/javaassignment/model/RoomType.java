@@ -3,8 +3,8 @@ package javaassignment.model;
 public enum RoomType {
     DELUXESINGLE("Deluxe Single Room"),
     SINGLE("Single Room"),
-    DELUXETWINS("Deluxe Twins Room"),
-    TWINS("Twins Room");
+    DELUXETWINS("Deluxe Twin Room"),
+    TWINS("Twin Room");
 
     private String name;
 
