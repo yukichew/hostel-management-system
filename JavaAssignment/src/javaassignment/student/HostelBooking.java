@@ -294,7 +294,7 @@ public final class HostelBooking extends javax.swing.JFrame {
                                         throw new Exception();
 
                                     } else {
-                                        HostelManagementSystem.studentlogin.setStudentBalance(amount);
+                                        HostelManagementSystem.studentlogin.setStudentBalance(amount + HostelManagementSystem.studentlogin.getStudentBalance());
                                         JOptionPane.showMessageDialog(hostelbooking, "You have successfully top tup RM"
                                                 + amount + " into your APCard.");
                                         StudentData.write();
