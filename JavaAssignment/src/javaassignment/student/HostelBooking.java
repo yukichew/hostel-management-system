@@ -268,10 +268,11 @@ public final class HostelBooking extends javax.swing.JFrame {
                             room.setRoomCapacity(roomcapacity);
                             room.setRoomAvailability();
                             RoomData.write();
-
+                            
                             StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice,
                                     bookingDate, studentID, roomNumber, contractPeriod));
                             StudentBookingData.write();
+                            
                             JOptionPane.showMessageDialog(hostelbooking,
                                     "Congratulations! Your room number is " + roomNumber);
                             double balance = studentBalance - roomPrice;

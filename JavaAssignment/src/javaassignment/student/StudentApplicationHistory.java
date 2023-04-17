@@ -30,7 +30,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
 
     private String checkHostelRoomStatus(LocalDate endDate) {
         LocalDate currentDate = LocalDate.now();
-        if (endDate.isBefore(currentDate)) {
+        if (endDate.isAfter(currentDate)) {
             return "Active";
         } else {
             return "Completed";
