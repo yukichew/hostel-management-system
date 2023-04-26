@@ -280,7 +280,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showInputDialog(studentHistoryPanel, "Fail to extend your contract period.");
+            JOptionPane.showMessageDialog(studentHistoryPanel, "Fail to extend your contract period.");
 
         }
     }//GEN-LAST:event_extendContractButtonActionPerformed
