@@ -75,7 +75,7 @@ public class StudentEditProfile extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Student Register");
+        setTitle("Student Edit Profile");
         setBounds(new java.awt.Rectangle(550, 300, 0, 0));
 
         lblstudentID.setText("Student ID:");
