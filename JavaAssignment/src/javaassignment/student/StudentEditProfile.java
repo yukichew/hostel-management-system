@@ -140,6 +140,11 @@ public class StudentEditProfile extends javax.swing.JFrame {
         );
 
         backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout editProfilePanelLayout = new javax.swing.GroupLayout(editProfilePanel);
         editProfilePanel.setLayout(editProfilePanelLayout);
@@ -331,6 +336,12 @@ public class StudentEditProfile extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        StudentDashboard studentDashboard = new StudentDashboard();
+        studentDashboard.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_backButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
