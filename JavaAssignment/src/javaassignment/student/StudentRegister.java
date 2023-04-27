@@ -302,7 +302,8 @@ public class StudentRegister extends javax.swing.JFrame {
 
             } else {
                 if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0') {
-                    JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
+                    JOptionPane.showMessageDialog(Register, "Invalid contact number. Please enter a valid phone number with 10 or 11 digits. "
+                                    + "Please ensure that the number is in the format of 0XXXXXXXXX or 0XXXXXXXX.");
 
                 } else {
 
@@ -314,7 +315,8 @@ public class StudentRegister extends javax.swing.JFrame {
 
                         if (!Character.isDigit(studentContact.charAt(a))) {
                             checkContact = false;
-                            JOptionPane.showMessageDialog(Register, "Please enter a valid contact.");
+                            JOptionPane.showMessageDialog(Register, "Invalid contact number. Please enter a valid phone number with 10 or 11 digits. "
+                                    + "Please ensure that the number is in the format of 0XXXXXXXXX or 0XXXXXXXX.");
                             break;
                         }
                     }
@@ -347,7 +349,7 @@ public class StudentRegister extends javax.swing.JFrame {
                                     StudentData.write();
                                     
                                     JOptionPane.showMessageDialog(Register,
-                                            "Congratulations! You have now a member of XX System.");
+                                            "Congratulations! You have now a member of APU Hostel Management System.");
                                     loginf.setVisible(true);
                                     tfstudentName.setText("");
                                     tfstudentID.setText("");
