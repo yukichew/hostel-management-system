@@ -233,7 +233,7 @@ public class StudentLogin extends javax.swing.JFrame {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(login,
-                    "Please ensure that you have entered your username and password correctly.");
+                    "Please ensure that you have entered your student ID and password correctly.");
 
         }
     }//GEN-LAST:event_loginButtonActionPerformed
