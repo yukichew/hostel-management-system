@@ -19,16 +19,9 @@ public class StudentRegister extends javax.swing.JFrame {
         initComponents();
     }
 
-    public String getGen() {
-        if (male.isSelected()) {
-            return "Male";
-
-        } else if (female.isSelected()) {
-            return "Female";
-
-        } else {
-            return null;
-        }
+    private String getGen() {
+        String gender = male.isSelected() ? male.getText() : female.getText();
+        return gender;
     }
 
     @SuppressWarnings("unchecked")
@@ -303,7 +296,7 @@ public class StudentRegister extends javax.swing.JFrame {
             } else {
                 if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0') {
                     JOptionPane.showMessageDialog(Register, "Invalid contact number. Please enter a valid phone number with 10 or 11 digits. "
-                                    + "Please ensure that the number is in the format of 0XXXXXXXXX or 0XXXXXXXX.");
+                            + "Please ensure that the number is in the format of 0XXXXXXXXX or 0XXXXXXXX.");
 
                 } else {
 
@@ -347,7 +340,7 @@ public class StudentRegister extends javax.swing.JFrame {
                                     StudentData.students.add(new Student(studentID, studentName,
                                             studentNIC, studentPassword, studentGender, studentContact, studentAddress, studentBalance));
                                     StudentData.write();
-                                    
+
                                     JOptionPane.showMessageDialog(Register,
                                             "Congratulations! You have now a member of APU Hostel Management System.");
                                     loginf.setVisible(true);

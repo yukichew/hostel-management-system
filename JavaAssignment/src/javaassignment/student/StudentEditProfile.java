@@ -16,16 +16,9 @@ public class StudentEditProfile extends javax.swing.JFrame {
         getStudentDetails();
     }
 
-    private String getGen() {
-        if (male.isSelected()) {
-            return "Male";
-
-        } else if (female.isSelected()) {
-            return "Female";
-
-        } else {
-            return null;
-        }
+    private String getGen() {        
+        String gender = male.isSelected() ? male.getText() : female.getText();
+        return gender;
     }
 
     private void showGender() {
