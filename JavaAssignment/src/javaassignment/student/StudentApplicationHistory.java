@@ -235,7 +235,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
             int year = Integer.parseInt(contractPeriod);
 
             if (year < 1) {
-                JOptionPane.showInputDialog(studentHistoryPanel, "The minimum year is 1 year.");
+                JOptionPane.showMessageDialog(studentHistoryPanel, "The minimum year is 1 year.");
             } else {
                 StudentBooking studentBooking = StudentBookingData.checkStudentBooking(HostelManagementSystem.studentlogin.getStudentID());
 
@@ -248,6 +248,12 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
                     if (studentBalance >= roomPrice) {
                         studentBooking.setContractPeriod(contractMonths);
                         StudentBookingData.write();
+
+                        double balance = studentBalance - roomPrice;
+                        HostelManagementSystem.studentlogin.setStudentBalance(balance);
+                        StudentData.write();
+
+                        JOptionPane.showMessageDialog(studentHistoryPanel, "You have successfully extended your contract period.");
                         getApplicationHistory();
 
                     } else {

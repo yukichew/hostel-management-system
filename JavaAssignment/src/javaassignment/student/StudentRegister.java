@@ -342,7 +342,7 @@ public class StudentRegister extends javax.swing.JFrame {
                                     StudentData.write();
 
                                     JOptionPane.showMessageDialog(Register,
-                                            "Congratulations! You have now a member of APU Hostel Management System.");
+                                            "Congratulations! You are now a member of APU Hostel Management System.");
                                     loginf.setVisible(true);
                                     tfstudentName.setText("");
                                     tfstudentID.setText("");
