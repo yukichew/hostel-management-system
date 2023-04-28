@@ -45,7 +45,7 @@ public class StudentData {
             for (int i = 0; i < students.size(); i++) {
                 Student s = students.get(i);
                 writer.write(s.getStudentID().toUpperCase() + ";" + s.getStudentName() + ";" + s.getStudentNIC()
-                        + ";" + s.getStudentPassword() + ";" + s.getStudentGender() + ";"
+                        + ";" + s.getPassword() + ";" + s.getStudentGender() + ";"
                         + s.getStudentContact() + ";" + s.getStudentAddress() + ";" + s.getStudentBalance());
                 writer.newLine();
             }

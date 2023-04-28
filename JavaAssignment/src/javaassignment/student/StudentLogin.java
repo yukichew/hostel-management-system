@@ -214,7 +214,7 @@ public class StudentLogin extends javax.swing.JFrame {
                 throw new Exception();
 
             } else {
-                if (found != null && studentPassword.equals(found.getStudentPassword())) {
+                if (found != null && studentPassword.equals(found.getPassword())) {
                     HostelManagementSystem.studentlogin = found;
                     JOptionPane.showMessageDialog(login,
                             "Congratulations! You have now successfully login to APU Hostel Management System!"

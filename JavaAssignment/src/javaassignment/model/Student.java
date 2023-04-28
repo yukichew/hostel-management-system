@@ -4,24 +4,23 @@ package javaassignment.model;
  *
  * @author yukichew
  */
-public class Student {
+public class Student extends User {
 
     private String studentID;
     private String studentName;
     private String studentNIC;
-    private String studentPassword;
     private String studentGender;
     private String studentContact;
     private String studentAddress;
     private double studentBalance;
-    
-    public Student(String studentID, String studentName, String studentNIC,
-            String studentPassword, String studentGender, String studentContact,
+
+    public Student(String studentID, String studentName, String studentNIC, 
+            String studentPassword, String studentGender, String studentContact, 
             String studentAddress, double studentBalance) {
+        super(studentPassword);
         this.studentID = studentID;
         this.studentName = studentName;
         this.studentNIC = studentNIC;
-        this.studentPassword = studentPassword;
         this.studentGender = studentGender;
         this.studentContact = studentContact;
         this.studentAddress = studentAddress;
@@ -50,14 +49,6 @@ public class Student {
 
     public void setStudentNIC(String studentNIC) {
         this.studentNIC = studentNIC;
-    }
-
-    public String getStudentPassword() {
-        return studentPassword;
-    }
-
-    public void setStudentPassword(String studentPassword) {
-        this.studentPassword = studentPassword;
     }
 
     public String getStudentGender() {
