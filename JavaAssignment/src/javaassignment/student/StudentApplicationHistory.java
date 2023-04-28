@@ -24,7 +24,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
 
     public StudentApplicationHistory() {
         initComponents();
-        lbluser.setText(HostelManagementSystem.studentlogin.getStudentID());
+        lbluser.setText(HostelManagementSystem.studentlogin.getUsername());
         getApplicationHistory();
     }
 
@@ -46,10 +46,10 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
 
     private void getApplicationHistory() {
         String[] columnNames = {"Room Number", "Room Type", "Contract Start Date", "Contract End Date", "Status"};
-        Object[][] data = new Object[StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getStudentID()).size()][5];
+        Object[][] data = new Object[StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getUsername()).size()][5];
 
-        for (int i = 0; i < StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getStudentID()).size(); i++) {
-            StudentBooking sb = StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getStudentID()).get(i);
+        for (int i = 0; i < StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getUsername()).size(); i++) {
+            StudentBooking sb = StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getUsername()).get(i);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             String contractEndDate = formatter.format(sb.getContractEndDate());
 
@@ -237,7 +237,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
             if (year < 1) {
                 JOptionPane.showMessageDialog(studentHistoryPanel, "The minimum year is 1 year.");
             } else {
-                StudentBooking studentBooking = StudentBookingData.checkStudentBooking(HostelManagementSystem.studentlogin.getStudentID());
+                StudentBooking studentBooking = StudentBookingData.checkStudentBooking(HostelManagementSystem.studentlogin.getUsername());
 
                 if (studentBooking != null) {
                     double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();

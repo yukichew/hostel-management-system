@@ -44,7 +44,7 @@ public class StudentData {
             BufferedWriter writer = new BufferedWriter(new PrintWriter("student.txt"));
             for (int i = 0; i < students.size(); i++) {
                 Student s = students.get(i);
-                writer.write(s.getStudentID().toUpperCase() + ";" + s.getStudentName() + ";" + s.getStudentNIC()
+                writer.write(s.getUsername().toUpperCase() + ";" + s.getStudentName() + ";" + s.getStudentNIC()
                         + ";" + s.getPassword() + ";" + s.getStudentGender() + ";"
                         + s.getStudentContact() + ";" + s.getStudentAddress() + ";" + s.getStudentBalance());
                 writer.newLine();
@@ -59,7 +59,7 @@ public class StudentData {
         Student found = null;
         for (int i = 0; i < students.size(); i++) {
             Student s = students.get(i);
-            if (studentID.equals(s.getStudentID())) {
+            if (studentID.equals(s.getUsername())) {
                 found = s;
                 break;
             }

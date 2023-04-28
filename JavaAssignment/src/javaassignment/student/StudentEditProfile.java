@@ -31,7 +31,7 @@ public class StudentEditProfile extends javax.swing.JFrame {
     }
 
     private void getStudentDetails() {
-        tfstudentID.setText(HostelManagementSystem.studentlogin.getStudentID());
+        tfstudentID.setText(HostelManagementSystem.studentlogin.getUsername());
         tfstudentID.setEditable(false);
         tfstudentName.setText(HostelManagementSystem.studentlogin.getStudentName());
         tfstudentNIC.setText(HostelManagementSystem.studentlogin.getStudentNIC());

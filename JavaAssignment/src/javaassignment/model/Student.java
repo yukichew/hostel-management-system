@@ -6,7 +6,6 @@ package javaassignment.model;
  */
 public class Student extends User {
 
-    private String studentID;
     private String studentName;
     private String studentNIC;
     private String studentGender;
@@ -17,22 +16,13 @@ public class Student extends User {
     public Student(String studentID, String studentName, String studentNIC, 
             String studentPassword, String studentGender, String studentContact, 
             String studentAddress, double studentBalance) {
-        super(studentPassword);
-        this.studentID = studentID;
+        super(studentID, studentPassword);
         this.studentName = studentName;
         this.studentNIC = studentNIC;
         this.studentGender = studentGender;
         this.studentContact = studentContact;
         this.studentAddress = studentAddress;
         this.studentBalance = studentBalance;
-    }
-
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
     }
 
     public String getStudentName() {

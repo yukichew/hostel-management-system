@@ -247,7 +247,7 @@ public final class HostelBooking extends javax.swing.JFrame {
             Date date = new Date();
             String bookingDate = dateformat.format(date);
 
-            String studentID = HostelManagementSystem.studentlogin.getStudentID();
+            String studentID = HostelManagementSystem.studentlogin.getUsername();
             StudentBooking found = StudentBookingData.checkStudentBooking(studentID);
 
             int roomNumber = room.getRoomNumber();

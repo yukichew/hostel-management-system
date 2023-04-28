@@ -15,8 +15,8 @@ public class StudentDashboard extends javax.swing.JFrame {
     }
     
     private void showStudentDetails(){
-        lbluser.setText(HostelManagementSystem.studentlogin.getStudentID());
-        lblstudentID.setText(HostelManagementSystem.studentlogin.getStudentID());
+        lbluser.setText(HostelManagementSystem.studentlogin.getUsername());
+        lblstudentID.setText(HostelManagementSystem.studentlogin.getUsername());
         lblstudentName.setText(HostelManagementSystem.studentlogin.getStudentName());
         lblstudentNIC.setText(HostelManagementSystem.studentlogin.getStudentNIC());
         lblstudentGender.setText(HostelManagementSystem.studentlogin.getStudentGender());

@@ -13,7 +13,7 @@ public class StudentTransaction extends javax.swing.JFrame {
     public StudentTransaction() {
         initComponents();
         setstudentBalanceField();
-        lbluser.setText(HostelManagementSystem.studentlogin.getStudentID());
+        lbluser.setText(HostelManagementSystem.studentlogin.getUsername());
     }
 
     private void setstudentBalanceField() {
