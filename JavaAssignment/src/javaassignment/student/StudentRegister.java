@@ -1,7 +1,6 @@
 package javaassignment.student;
 
 import static javaassignment.HostelManagementSystem.loginf;
-import static javaassignment.HostelManagementSystem.mainPage;
 import static javaassignment.HostelManagementSystem.registerf;
 import javaassignment.model.Student;
 import javaassignment.student.studentservices.StudentData;
@@ -272,7 +271,7 @@ public class StudentRegister extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         registerf.setVisible(false);
-        mainPage.setVisible(true);
+        loginf.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
