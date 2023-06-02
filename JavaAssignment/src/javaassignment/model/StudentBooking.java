@@ -2,6 +2,7 @@ package javaassignment.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javaassignment.student.studentservices.StudentBookingData;
 
 /**
  *
@@ -90,10 +91,15 @@ public class StudentBooking {
         return endDate;
     }
 
-    public void setCompletedStatus(LocalDate endDate) {
-        LocalDate currentDate = LocalDate.now();
-        if (endDate.isAfter(currentDate)) {
-            setBookingStatus(BookingStatus.COMPLETED);
+    public void checkBookingStatus() {
+        if (bookingStatus.equals("ACTIVE")) {
+            LocalDate currentDate = LocalDate.now();
+            LocalDate endDate = this.getContractEndDate();
+
+            if (currentDate.isAfter(endDate)) {
+                this.setBookingStatus(BookingStatus.COMPLETED);
+                StudentBookingData.write();
+            }
         }
     }
 }

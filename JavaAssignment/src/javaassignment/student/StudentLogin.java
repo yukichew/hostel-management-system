@@ -1,12 +1,8 @@
 package javaassignment.student;
 
 import javaassignment.HostelManagementSystem;
-import static javaassignment.HostelManagementSystem.loginf;
 import static javaassignment.HostelManagementSystem.mainPage;
-import static javaassignment.HostelManagementSystem.registerf;
 import javaassignment.model.Student;
-import javaassignment.student.studentservices.PaymentData;
-import javaassignment.student.studentservices.StudentBookingData;
 import javaassignment.student.studentservices.StudentData;
 import javax.swing.JOptionPane;
 
@@ -18,8 +14,7 @@ public class StudentLogin extends javax.swing.JFrame {
 
     public StudentLogin() {
         initComponents();
-        StudentBookingData.read();
-        PaymentData.read();
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -226,7 +221,7 @@ public class StudentLogin extends javax.swing.JFrame {
                     studentDashboard.setVisible(true);
                     tfstudentID.setText("");
                     tfstudentPassword.setText("");
-                    loginf.setVisible(false);
+                    this.setVisible(false);
 
                 } else {
                     throw new Exception();
@@ -241,12 +236,13 @@ public class StudentLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void registerLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerLinkMouseClicked
-        loginf.setVisible(false);
+        this.setVisible(false);
+        StudentRegister registerf = new StudentRegister();
         registerf.setVisible(true);
     }//GEN-LAST:event_registerLinkMouseClicked
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        loginf.setVisible(false);
+        this.setVisible(false);
         mainPage.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 

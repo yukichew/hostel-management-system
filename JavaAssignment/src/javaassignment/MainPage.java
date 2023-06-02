@@ -1,10 +1,12 @@
 package javaassignment;
 
 import java.awt.Image;
-import static javaassignment.HostelManagementSystem.loginf;
 import static javaassignment.HostelManagementSystem.mainPage;
 import static javaassignment.HostelManagementSystem.alogin;
+import javaassignment.student.StudentLogin;
+import javaassignment.student.studentservices.PaymentData;
 import javaassignment.student.studentservices.RoomData;
+import javaassignment.student.studentservices.StudentBookingData;
 import javaassignment.student.studentservices.StudentData;
 import javax.swing.ImageIcon;
 
@@ -19,6 +21,9 @@ public class MainPage extends javax.swing.JFrame {
         scaleImage();
         StudentData.read();
         RoomData.read();
+        StudentBookingData.read();
+        StudentBookingData.autoUpdateBookingStatus();
+        PaymentData.read();
     }
 
     public void scaleImage() {
@@ -147,8 +152,9 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void studentLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentLoginButtonActionPerformed
-        mainPage.setVisible(false);
+        StudentLogin loginf = new StudentLogin();
         loginf.setVisible(true);
+        this.setVisible(false); 
     }//GEN-LAST:event_studentLoginButtonActionPerformed
 
 

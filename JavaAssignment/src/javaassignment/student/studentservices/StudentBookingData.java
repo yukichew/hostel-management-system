@@ -34,10 +34,10 @@ public class StudentBookingData {
                 int roomID = Integer.parseInt(bookingLine[4]);
                 int contractPeriod = Integer.parseInt(bookingLine[5]);
                 BookingStatus bookingStatus = BookingStatus.valueOf(bookingLine[6]);
-               
+
                 studentsBooking.add(new StudentBooking(bookingID, totalPrice, bookingDate, studentID, roomID, contractPeriod, bookingStatus));
             }
-            
+
         } catch (Exception e) {
             System.out.println("Error in read ...");
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class StudentBookingData {
             for (int i = 0; i < studentsBooking.size(); i++) {
                 StudentBooking sb = studentsBooking.get(i);
                 writer.write(sb.getBookingID() + ";" + sb.getTotalPrice() + ";"
-                        + sb.getBookingDate() + ";" + sb.getStudentID() + ";" + sb.getRoomID() + ";" + sb.getContractPeriod() +  ";" + sb.getBookingStatus());
+                        + sb.getBookingDate() + ";" + sb.getStudentID() + ";" + sb.getRoomID() + ";" + sb.getContractPeriod() + ";" + sb.getBookingStatus());
                 writer.newLine();
             }
             writer.close();
@@ -59,7 +59,13 @@ public class StudentBookingData {
             System.out.println("Error in write ...");
         }
     }
-    
+
+    public static void autoUpdateBookingStatus() {
+        for (StudentBooking studentBooking : studentsBooking) {
+            studentBooking.checkBookingStatus();
+        }
+    }
+
     public static StudentBooking checkStudentBooking(String studentID) {
         StudentBooking found = null;
         LocalDate currentDate = LocalDate.now();

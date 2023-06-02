@@ -1,10 +1,8 @@
 package javaassignment.student;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javaassignment.HostelManagementSystem;
 import javaassignment.model.BookingStatus;
@@ -295,9 +293,11 @@ public final class HostelBooking extends javax.swing.JFrame {
                             StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice,
                                     bookingDate, studentID, roomNumber, contractPeriod, BookingStatus.PENDING));
                             StudentBookingData.write();
+                            
+                            String paymentDetails = "Payment for " + room.getRoomType().getName();
 
                             PaymentData.studentPayments.add(new StudentPayment(paymentID, HostelManagementSystem.studentlogin.getUsername(),
-                                    roomPrice, "Payment", paymentDate));
+                                    roomPrice, paymentDetails, paymentDate));
                             PaymentData.write();
 
                             JOptionPane.showMessageDialog(hostelbooking,

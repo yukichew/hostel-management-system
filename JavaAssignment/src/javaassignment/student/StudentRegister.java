@@ -1,7 +1,6 @@
 package javaassignment.student;
 
-import static javaassignment.HostelManagementSystem.loginf;
-import static javaassignment.HostelManagementSystem.registerf;
+import static javaassignment.HostelManagementSystem.mainPage;
 import javaassignment.model.Student;
 import javaassignment.student.studentservices.StudentData;
 import javax.swing.JOptionPane;
@@ -270,13 +269,14 @@ public class StudentRegister extends javax.swing.JFrame {
     }//GEN-LAST:event_showPasswordActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        registerf.setVisible(false);
-        loginf.setVisible(true);
+        mainPage.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
-        registerf.setVisible(false);
+        StudentLogin loginf = new StudentLogin();
         loginf.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_loginLinkMouseClicked
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
@@ -342,7 +342,11 @@ public class StudentRegister extends javax.swing.JFrame {
 
                                     JOptionPane.showMessageDialog(Register,
                                             "Congratulations! You are now a member of APU Hostel Management System.");
+
+                                    StudentLogin loginf = new StudentLogin();
                                     loginf.setVisible(true);
+                                    this.setVisible(false);
+
                                     tfstudentName.setText("");
                                     tfstudentID.setText("");
                                     tfstudentContact.setText("");
@@ -350,7 +354,7 @@ public class StudentRegister extends javax.swing.JFrame {
                                     tfstudentPassword.setText("");
                                     tfstudentAddress.setText("");
                                     gender.clearSelection();
-                                    registerf.setVisible(false);
+                                    this.setVisible(false);
 
                                 } else {
                                     JOptionPane.showMessageDialog(Register,
