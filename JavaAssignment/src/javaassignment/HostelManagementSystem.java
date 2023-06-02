@@ -6,10 +6,10 @@ import javaassignment.model.Admin;
 import javaassignment.model.Room;
 
 public class HostelManagementSystem {
-    
+
     public static MainPage mainPage = new MainPage();
     public static AdminLogin alogin = new AdminLogin();
-    
+
     public static Student studentlogin;
     public static Admin adminlogin;
     public static Room roomInfo;
@@ -18,5 +18,3 @@ public class HostelManagementSystem {
         mainPage.setVisible(true);
     }
 }
-    
-

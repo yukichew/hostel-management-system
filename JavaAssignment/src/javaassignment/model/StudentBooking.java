@@ -92,12 +92,12 @@ public class StudentBooking {
     }
 
     public void checkBookingStatus() {
-        if (bookingStatus.equals("ACTIVE")) {
+        if (bookingStatus == BookingStatus.ACTIVE) {
             LocalDate currentDate = LocalDate.now();
             LocalDate endDate = this.getContractEndDate();
 
             if (currentDate.isAfter(endDate)) {
-                this.setBookingStatus(BookingStatus.COMPLETED);
+                setBookingStatus(BookingStatus.COMPLETED);
                 StudentBookingData.write();
             }
         }

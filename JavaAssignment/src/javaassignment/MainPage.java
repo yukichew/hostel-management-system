@@ -154,7 +154,7 @@ public class MainPage extends javax.swing.JFrame {
     private void studentLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentLoginButtonActionPerformed
         StudentLogin loginf = new StudentLogin();
         loginf.setVisible(true);
-        this.setVisible(false); 
+        this.setVisible(false);
     }//GEN-LAST:event_studentLoginButtonActionPerformed
 
 
