@@ -96,4 +96,24 @@ public class RoomData {
         return found;
     }
 
+    public static ArrayList<Room> checkAvailableRooms() {
+        ArrayList<Room> availableRooms = new ArrayList<Room>();
+        for (Room room : rooms) {
+            if (room.isRoomAvailability()) {
+                availableRooms.add(room);
+            }
+        }
+        return availableRooms;
+    }
+
+    public static int getAvailableRoomCount(RoomType roomType) {
+        int count = 0;
+        for (Room room : rooms) {
+            if (room.getRoomType() == roomType && room.isRoomAvailability()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

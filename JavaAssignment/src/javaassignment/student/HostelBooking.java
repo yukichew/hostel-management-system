@@ -3,7 +3,6 @@ package javaassignment.student;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 import javaassignment.HostelManagementSystem;
 import javaassignment.model.BookingStatus;
 import javaassignment.model.Room;
@@ -27,7 +26,13 @@ import javax.swing.table.TableRowSorter;
 public final class HostelBooking extends javax.swing.JFrame {
 
     private int contractPeriod = 12;
-    DefaultTableModel model;
+    private DefaultTableModel model;
+    private ArrayList<Room> availableRooms = RoomData.checkAvailableRooms();
+
+    int single;
+    int twin;
+    int deluxeSingle;
+    int deluxeTwin;
 
     public HostelBooking() {
         initComponents();
@@ -66,19 +71,29 @@ public final class HostelBooking extends javax.swing.JFrame {
 
     private void getHostelDetails() {
         String[] columnNames = {"Room Number", "Room Type", "Price", "Availability"};
-        Object[][] data = new Object[RoomData.rooms.size()][4];
-
-        for (int i = 0; i < RoomData.rooms.size(); i++) {
-            Room room = RoomData.rooms.get(i);
+        Object[][] data = new Object[availableRooms.size()][4];
+        for (int i = 0; i < availableRooms.size(); i++) {
+            Room room = availableRooms.get(i);
             data[i][0] = room.getRoomNumber();
             data[i][1] = room.getRoomType().getName();
             data[i][2] = room.getRoomPrice();
             String roomAvailable = getRoomAvailability(room.isRoomAvailability());
             data[i][3] = roomAvailable;
+
         }
 
         model = new DefaultTableModel(data, columnNames);
         hostelDetailsTable.setModel(model);
+
+        single = RoomData.getAvailableRoomCount(RoomType.SINGLE);
+        twin = RoomData.getAvailableRoomCount(RoomType.TWINS);
+        deluxeSingle = RoomData.getAvailableRoomCount(RoomType.DELUXESINGLE);
+        deluxeTwin = RoomData.getAvailableRoomCount(RoomType.DELUXETWINS);
+
+        jLabel3.setText("Number of available Single Room: " + single);
+        jLabel4.setText("Number of available Twin Room: " + twin);
+        jLabel5.setText("Number of available Deluxe Single Room: " + deluxeSingle);
+        jLabel6.setText("Number of available Deluxe Twin Room: " + deluxeTwin);
     }
 
     private void tableFilter(String query) {
@@ -100,9 +115,13 @@ public final class HostelBooking extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         confirmButton = new javax.swing.JButton();
-        availableRoom = new javax.swing.JButton();
-        showAllRooms = new javax.swing.JButton();
         searchField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hostel Booking");
@@ -125,23 +144,25 @@ public final class HostelBooking extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblroomType, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(roomTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(168, 168, 168)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblroomType, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(roomTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblroomType, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(roomTypeCombo)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
+                    .addComponent(lblroomType, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         backButton.setText("Back");
@@ -158,176 +179,209 @@ public final class HostelBooking extends javax.swing.JFrame {
             }
         });
 
-        availableRoom.setText("Show Available Rooms Only");
-        availableRoom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                availableRoomActionPerformed(evt);
-            }
-        });
-
-        showAllRooms.setText("Show All Rooms");
-        showAllRooms.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showAllRoomsActionPerformed(evt);
-            }
-        });
-
         searchField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 searchFieldKeyReleased(evt);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel2.setText("Search:");
+
+        jLabel3.setText("Number of available Single Room:");
+
+        jLabel4.setText("Number of available Twin Room:");
+
+        jLabel5.setText("Number of available Deluxe Single Room:");
+
+        jLabel6.setText("Number of available Deluxe Twin Room:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addContainerGap(221, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout hostelbookingLayout = new javax.swing.GroupLayout(hostelbooking);
         hostelbooking.setLayout(hostelbookingLayout);
         hostelbookingLayout.setHorizontalGroup(
             hostelbookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hostelbookingLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(hostelbookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hostelDetailScrollPane)
                     .addGroup(hostelbookingLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(hostelbookingLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel2)
+                        .addGap(39, 39, 39)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(hostelbookingLayout.createSequentialGroup()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9))
-                    .addComponent(hostelDetailScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(hostelbookingLayout.createSequentialGroup()
-                        .addComponent(availableRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)
-                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(showAllRooms, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15))
         );
         hostelbookingLayout.setVerticalGroup(
             hostelbookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hostelbookingLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(hostelbookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(availableRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(showAllRooms, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(hostelDetailScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(hostelbookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(hostelbookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(hostelbooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(hostelbooking, javax.swing.GroupLayout.DEFAULT_SIZE, 958, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(hostelbooking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(hostelbooking, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(964, 592));
+        setSize(new java.awt.Dimension(964, 617));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
+        String query = searchField.getText().toLowerCase();
+        tableFilter(query);
+    }//GEN-LAST:event_searchFieldKeyReleased
+
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         String selectedRoomType = (String) roomTypeCombo.getItemAt(roomTypeCombo.getSelectedIndex());
-        try {
-            
-            int bookingId = StudentBookingData.getLastOrderID();
-            int bookingID = ++bookingId;
+        if (selectedRoomType != null) {
+            try {
+                int bookingId = StudentBookingData.getLastOrderID();
+                int bookingID = ++bookingId;
 
-            RoomType roomtype = checkRoomType(selectedRoomType);
-            Room room = RoomData.checkAvailableRoomType(roomtype);
-            double roomPrice = room.getRoomPrice();
+                RoomType roomtype = checkRoomType(selectedRoomType);
+                Room room = RoomData.checkAvailableRoomType(roomtype);
+                double roomPrice = room.getRoomPrice();
 
-            LocalDateTime date = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String paymentDate = date.format(formatter);
+                LocalDateTime date = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String paymentDate = date.format(formatter);
 
-            DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            String bookingDate = date.format(dateformat);
+                DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                String bookingDate = date.format(dateformat);
 
-            int roomNumber = room.getRoomNumber();
+                int roomNumber = room.getRoomNumber();
 
-            String studentID = HostelManagementSystem.studentlogin.getUsername();
+                String studentID = HostelManagementSystem.studentlogin.getUsername();
 
-            ArrayList<StudentBooking> studentBookings = StudentBookingData.checkStudentBookings(studentID);
-            boolean status = false;
+                ArrayList<StudentBooking> studentBookings = StudentBookingData.checkStudentBookings(studentID);
+                boolean status = false;
 
-            for (StudentBooking booking : studentBookings) {
-                if (booking.getBookingStatus() == BookingStatus.PENDING || booking.getBookingStatus() == BookingStatus.ACTIVE) {
-                    status = true;
-                    break;
+                for (StudentBooking booking : studentBookings) {
+                    if (booking.getBookingStatus() == BookingStatus.PENDING || booking.getBookingStatus() == BookingStatus.ACTIVE) {
+                        status = true;
+                        break;
+                    }
                 }
-            }
-            
-            if (status) {
-                JOptionPane.showMessageDialog(hostelbooking,
-                        "You already have a pending or active room. You can only book another room after your contract end.");
-            } else {
-                if (room == null) {
-                    throw new Exception();
 
+                if (status) {
+                    JOptionPane.showMessageDialog(hostelbooking,
+                            "You already have a pending or active room. You can only book another room after your contract end.");
                 } else {
+                    if (room == null) {
+                        throw new Exception();
 
-                    int option = JOptionPane.showConfirmDialog(hostelbooking, "Confirm booking?",
-                            "Booking Confirmation", YES_NO_OPTION);
-                    if (option == JOptionPane.YES_OPTION) {
-                        double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();
-                        int paymentId = PaymentData.getLastPaymentID();
-                        int paymentID = ++paymentId;
+                    } else {
 
-                        if (studentBalance >= roomPrice) {
-                            int roomCapacity = room.getRoomCapacity();
-                            int roomcapacity = ++roomCapacity;
-                            room.setRoomCapacity(roomcapacity);
-                            room.setRoomAvailability();
-                            RoomData.write();
+                        int option = JOptionPane.showConfirmDialog(hostelbooking, "Confirm booking?",
+                                "Booking Confirmation", YES_NO_OPTION);
+                        if (option == JOptionPane.YES_OPTION) {
+                            double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();
+                            int paymentId = PaymentData.getLastPaymentID();
+                            int paymentID = ++paymentId;
 
-                            StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice,
-                                    bookingDate, studentID, roomNumber, contractPeriod, BookingStatus.PENDING));
-                            StudentBookingData.write();
-                            
-                            String paymentDetails = "Payment for " + room.getRoomType().getName();
+                            if (studentBalance >= roomPrice) {
+                                int roomCapacity = room.getRoomCapacity();
+                                int roomcapacity = ++roomCapacity;
+                                room.setRoomCapacity(roomcapacity);
+                                room.setRoomAvailability();
+                                RoomData.write();
 
-                            PaymentData.studentPayments.add(new StudentPayment(paymentID, HostelManagementSystem.studentlogin.getUsername(),
-                                    roomPrice, paymentDetails, paymentDate));
-                            PaymentData.write();
+                                StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice,
+                                        bookingDate, studentID, roomNumber, contractPeriod, BookingStatus.PENDING));
+                                StudentBookingData.write();
 
-                            JOptionPane.showMessageDialog(hostelbooking,
-                                    "Congratulations! Your have booked a room. However, your booking will be confirmed only when admin is approved your application.");
-                            double balance = studentBalance - roomPrice;
-                            HostelManagementSystem.studentlogin.setStudentBalance(balance);
-                            StudentData.write();
+                                String paymentDetails = "Payment for " + room.getRoomType().getName();
 
-                            StudentApplicationHistory studentHistory = new StudentApplicationHistory();
-                            studentHistory.setVisible(true);
-                            this.setVisible(false);
+                                PaymentData.studentPayments.add(new StudentPayment(paymentID, HostelManagementSystem.studentlogin.getUsername(),
+                                        roomPrice, paymentDetails, paymentDate));
+                                PaymentData.write();
 
-                        } else {
-                            int a = JOptionPane.showConfirmDialog(hostelbooking, "Booking failed due to insufficient balance."
-                                    + " Please top up your APCard to proceed. Do you want to top up your balance now?", "Top Up Confirmation", YES_NO_OPTION);
-                            if (a == JOptionPane.YES_OPTION) {
-                                StudentTransaction studentTransaction = new StudentTransaction();
-                                studentTransaction.setVisible(true);
+                                JOptionPane.showMessageDialog(hostelbooking,
+                                        "Congratulations! Your have booked a " + room.getRoomType().getName() + ". However, your booking will only be confirmed after  admin has approved your application.");
+                                double balance = studentBalance - roomPrice;
+                                HostelManagementSystem.studentlogin.setStudentBalance(balance);
+                                StudentData.write();
+
+                                StudentApplicationHistory studentHistory = new StudentApplicationHistory();
+                                studentHistory.setVisible(true);
                                 this.setVisible(false);
+
+                            } else {
+                                int a = JOptionPane.showConfirmDialog(hostelbooking, "Booking failed due to insufficient balance."
+                                        + " Please top up your APCard to proceed. Do you want to top up your balance now?", "Top Up Confirmation", YES_NO_OPTION);
+                                if (a == JOptionPane.YES_OPTION) {
+                                    StudentTransaction studentTransaction = new StudentTransaction();
+                                    studentTransaction.setVisible(true);
+                                    this.setVisible(false);
+                                }
                             }
                         }
                     }
                 }
-            }
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(hostelbooking,
-                    "Sorry, no available " + selectedRoomType + " at this time.");
-        }
 
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(hostelbooking,
+                        "Sorry, no available " + selectedRoomType + " at this time.");
+            }
+        }
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -336,44 +390,22 @@ public final class HostelBooking extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void availableRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availableRoomActionPerformed
-        String[] columnNames = {"Room Number", "Room Type", "Price", "Availability"};
-        List<Object[]> data = new ArrayList<>();
-        for (Room room : RoomData.rooms) {
-            if (room.isRoomAvailability()) {
-                Object[] row = new Object[4];
-                row[0] = room.getRoomNumber();
-                row[1] = room.getRoomType().getName();
-                row[2] = room.getRoomPrice();
-                row[3] = getRoomAvailability(room.isRoomAvailability());
-                data.add(row);
-            }
-        }
-        DefaultTableModel availableRooms = new DefaultTableModel(data.toArray(new Object[0][]), columnNames);
-        hostelDetailsTable.setModel(availableRooms);
-    }//GEN-LAST:event_availableRoomActionPerformed
-
-    private void showAllRoomsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllRoomsActionPerformed
-        getHostelDetails();
-    }//GEN-LAST:event_showAllRoomsActionPerformed
-
-    private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
-        String query = searchField.getText().toLowerCase();
-        tableFilter(query);
-    }//GEN-LAST:event_searchFieldKeyReleased
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton availableRoom;
     private javax.swing.JButton backButton;
     private javax.swing.JButton confirmButton;
     private javax.swing.JScrollPane hostelDetailScrollPane;
     private javax.swing.JTable hostelDetailsTable;
     private javax.swing.JPanel hostelbooking;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblroomType;
     private javax.swing.JComboBox<String> roomTypeCombo;
     private javax.swing.JTextField searchField;
-    private javax.swing.JButton showAllRooms;
     // End of variables declaration//GEN-END:variables
 }
