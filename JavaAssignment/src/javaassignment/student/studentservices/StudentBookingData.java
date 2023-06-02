@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import javaassignment.model.BookingStatus;
 import javaassignment.model.StudentBooking;
 
 /**
@@ -30,8 +33,9 @@ public class StudentBookingData {
                 String studentID = bookingLine[3];
                 int roomID = Integer.parseInt(bookingLine[4]);
                 int contractPeriod = Integer.parseInt(bookingLine[5]);
-
-                studentsBooking.add(new StudentBooking(bookingID, totalPrice, bookingDate, studentID, roomID, contractPeriod));
+                BookingStatus bookingStatus = BookingStatus.valueOf(bookingLine[6]);
+               
+                studentsBooking.add(new StudentBooking(bookingID, totalPrice, bookingDate, studentID, roomID, contractPeriod, bookingStatus));
             }
             
         } catch (Exception e) {
@@ -42,11 +46,12 @@ public class StudentBookingData {
 
     public static void write() {
         try {
+            Collections.sort(studentsBooking, Comparator.comparingInt(StudentBooking::getBookingID));
             BufferedWriter writer = new BufferedWriter(new PrintWriter("studentBooking.txt"));
             for (int i = 0; i < studentsBooking.size(); i++) {
                 StudentBooking sb = studentsBooking.get(i);
                 writer.write(sb.getBookingID() + ";" + sb.getTotalPrice() + ";"
-                        + sb.getBookingDate() + ";" + sb.getStudentID() + ";" + sb.getRoomID() + ";" + sb.getContractPeriod());
+                        + sb.getBookingDate() + ";" + sb.getStudentID() + ";" + sb.getRoomID() + ";" + sb.getContractPeriod() +  ";" + sb.getBookingStatus());
                 writer.newLine();
             }
             writer.close();
@@ -62,7 +67,7 @@ public class StudentBookingData {
             StudentBooking s = studentsBooking.get(i);
             LocalDate contractEndDate = s.getContractEndDate();
             if (studentID.equals(s.getStudentID())) {
-                if (currentDate.isBefore(contractEndDate)) {
+                if (currentDate.isBefore(contractEndDate) && s.getBookingStatus() == BookingStatus.ACTIVE) {
                     found = s;
                     break;
                 }

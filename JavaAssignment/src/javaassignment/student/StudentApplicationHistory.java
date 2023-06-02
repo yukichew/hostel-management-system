@@ -1,6 +1,5 @@
 package javaassignment.student;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javaassignment.HostelManagementSystem;
 import javaassignment.model.Room;
@@ -28,16 +27,6 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
         getApplicationHistory();
     }
 
-    private String checkHostelRoomStatus(LocalDate endDate) {
-        LocalDate currentDate = LocalDate.now();
-        if (endDate.isAfter(currentDate)) {
-            return "Active";
-        } else {
-            return "Completed";
-        }
-
-    }
-
     private void tableFilter(String query) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(model);
         applicationHistoryTable.setRowSorter(sorter);
@@ -45,7 +34,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
     }
 
     private void getApplicationHistory() {
-        String[] columnNames = {"Room Number", "Room Type", "Contract Start Date", "Contract End Date", "Status"};
+        String[] columnNames = {"Room Number", "Room Type", "Contract Start Date", "Contract End Date", "Application Status"};
         Object[][] data = new Object[StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getUsername()).size()][5];
 
         for (int i = 0; i < StudentBookingData.checkStudentBookings(HostelManagementSystem.studentlogin.getUsername()).size(); i++) {
@@ -58,9 +47,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
             data[i][1] = room.getRoomType().getName();
             data[i][2] = sb.getBookingDate();
             data[i][3] = contractEndDate;
-
-            LocalDate currentDate = LocalDate.now();
-            data[i][4] = checkHostelRoomStatus(sb.getContractEndDate());
+            data[i][4] = sb.getBookingStatus();
         }
 
         model = new DefaultTableModel(data, columnNames);
@@ -127,6 +114,11 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        applicationHistoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                applicationHistoryTableMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(applicationHistoryTable);
 
         searchBar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -230,16 +222,17 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
 
     private void extendContractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extendContractButtonActionPerformed
         try {
-            String contractPeriod = JOptionPane.showInputDialog(studentHistoryPanel,
-                    "How many year you want to extend? The minimum year is 1 year.");
-            int year = Integer.parseInt(contractPeriod);
+            StudentBooking studentBooking = StudentBookingData.checkStudentBooking(HostelManagementSystem.studentlogin.getUsername());
 
-            if (year < 1) {
-                JOptionPane.showMessageDialog(studentHistoryPanel, "The minimum year is 1 year.");
-            } else {
-                StudentBooking studentBooking = StudentBookingData.checkStudentBooking(HostelManagementSystem.studentlogin.getUsername());
+            if (studentBooking != null) {
+                String contractPeriod = JOptionPane.showInputDialog(studentHistoryPanel,
+                        "How many year you want to extend? The minimum year is 1 year.");
+                int year = Integer.parseInt(contractPeriod);
 
-                if (studentBooking != null) {
+                if (year < 1) {
+                    JOptionPane.showMessageDialog(studentHistoryPanel, "The minimum year is 1 year.");
+                    
+                } else {
                     double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();
                     Room room = RoomData.checkRoom(studentBooking.getRoomID());
                     double roomPrice = room.getRoomPrice() * year;
@@ -255,34 +248,22 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
 
                         JOptionPane.showMessageDialog(studentHistoryPanel, "You have successfully extended your contract period.");
                         getApplicationHistory();
-
+                        
                     } else {
                         int a = JOptionPane.showConfirmDialog(studentHistoryPanel, "Booking failed due to insufficient balance."
                                 + " Please top up your APCard to proceed. Do you want to top up your balance now?", "Top Up Confirmation", YES_NO_OPTION);
+                        
                         if (a == JOptionPane.YES_OPTION) {
-                            try {
-                                String topUpAmount = JOptionPane.showInputDialog(studentHistoryPanel,
-                                        "Insert amount that you want to top up into your APCard.");
-                                Double amount = Double.parseDouble(topUpAmount);
-                                if (amount <= 0) {
-                                    throw new Exception();
-
-                                } else {
-                                    HostelManagementSystem.studentlogin.setStudentBalance(amount + HostelManagementSystem.studentlogin.getStudentBalance());
-                                    JOptionPane.showMessageDialog(studentHistoryPanel, "You have successfully top tup RM"
-                                            + amount + " into your APCard.");
-                                    StudentData.write();
-
-                                }
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(studentHistoryPanel, "Transaction Failed due to invalid amount.");
-                            }
+                            StudentTransaction studentTransaction = new StudentTransaction();
+                            studentTransaction.setVisible(true);
+                            this.setVisible(false);
                         }
                     }
-                } else {
-                    JOptionPane.showMessageDialog(studentHistoryPanel, "There's no active room right now.");
-                }
 
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(studentHistoryPanel, "There's no active room right now.");
             }
 
         } catch (Exception ex) {
@@ -295,6 +276,10 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
         String query = searchBar.getText().toLowerCase();
         tableFilter(query);
     }//GEN-LAST:event_searchBarKeyReleased
+
+    private void applicationHistoryTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationHistoryTableMouseReleased
+
+    }//GEN-LAST:event_applicationHistoryTableMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

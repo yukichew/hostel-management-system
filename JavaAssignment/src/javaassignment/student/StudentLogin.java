@@ -5,6 +5,7 @@ import static javaassignment.HostelManagementSystem.loginf;
 import static javaassignment.HostelManagementSystem.mainPage;
 import static javaassignment.HostelManagementSystem.registerf;
 import javaassignment.model.Student;
+import javaassignment.student.studentservices.PaymentData;
 import javaassignment.student.studentservices.StudentBookingData;
 import javaassignment.student.studentservices.StudentData;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ public class StudentLogin extends javax.swing.JFrame {
     public StudentLogin() {
         initComponents();
         StudentBookingData.read();
+        PaymentData.read();
     }
 
     @SuppressWarnings("unchecked")

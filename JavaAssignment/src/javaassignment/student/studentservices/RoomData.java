@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javaassignment.model.Room;
 import javaassignment.model.RoomType;
 import javaassignment.model.roomsubclass.*;
@@ -57,6 +59,7 @@ public class RoomData {
 
     public static void write() {
         try {
+            Collections.sort(rooms, Comparator.comparingInt(Room::getRoomNumber));
             BufferedWriter writer = new BufferedWriter(new FileWriter("room.txt"));
             for (int i = 0; i < rooms.size(); i++) {
                 Room room = rooms.get(i);

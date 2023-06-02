@@ -1,13 +1,18 @@
 package javaassignment.student;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javaassignment.HostelManagementSystem;
+import javaassignment.model.BookingStatus;
 import javaassignment.model.Room;
 import javaassignment.model.RoomType;
 import javaassignment.model.StudentBooking;
+import javaassignment.model.StudentPayment;
+import javaassignment.student.studentservices.PaymentData;
 import javaassignment.student.studentservices.StudentBookingData;
 import javaassignment.student.studentservices.RoomData;
 import javaassignment.student.studentservices.StudentData;
@@ -234,8 +239,8 @@ public final class HostelBooking extends javax.swing.JFrame {
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         String selectedRoomType = (String) roomTypeCombo.getItemAt(roomTypeCombo.getSelectedIndex());
-
         try {
+            
             int bookingId = StudentBookingData.getLastOrderID();
             int bookingID = ++bookingId;
 
@@ -243,24 +248,42 @@ public final class HostelBooking extends javax.swing.JFrame {
             Room room = RoomData.checkAvailableRoomType(roomtype);
             double roomPrice = room.getRoomPrice();
 
-            SimpleDateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy");
-            Date date = new Date();
-            String bookingDate = dateformat.format(date);
+            LocalDateTime date = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String paymentDate = date.format(formatter);
 
-            String studentID = HostelManagementSystem.studentlogin.getUsername();
-            StudentBooking found = StudentBookingData.checkStudentBooking(studentID);
+            DateTimeFormatter dateformat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            String bookingDate = date.format(dateformat);
 
             int roomNumber = room.getRoomNumber();
 
-            if (found == null) {
+            String studentID = HostelManagementSystem.studentlogin.getUsername();
+
+            ArrayList<StudentBooking> studentBookings = StudentBookingData.checkStudentBookings(studentID);
+            boolean status = false;
+
+            for (StudentBooking booking : studentBookings) {
+                if (booking.getBookingStatus() == BookingStatus.PENDING || booking.getBookingStatus() == BookingStatus.ACTIVE) {
+                    status = true;
+                    break;
+                }
+            }
+            
+            if (status) {
+                JOptionPane.showMessageDialog(hostelbooking,
+                        "You already have a pending or active room. You can only book another room after your contract end.");
+            } else {
                 if (room == null) {
                     throw new Exception();
 
                 } else {
+
                     int option = JOptionPane.showConfirmDialog(hostelbooking, "Confirm booking?",
                             "Booking Confirmation", YES_NO_OPTION);
                     if (option == JOptionPane.YES_OPTION) {
                         double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();
+                        int paymentId = PaymentData.getLastPaymentID();
+                        int paymentID = ++paymentId;
 
                         if (studentBalance >= roomPrice) {
                             int roomCapacity = room.getRoomCapacity();
@@ -268,13 +291,17 @@ public final class HostelBooking extends javax.swing.JFrame {
                             room.setRoomCapacity(roomcapacity);
                             room.setRoomAvailability();
                             RoomData.write();
-                            
+
                             StudentBookingData.studentsBooking.add(new StudentBooking(bookingID, roomPrice,
-                                    bookingDate, studentID, roomNumber, contractPeriod));
+                                    bookingDate, studentID, roomNumber, contractPeriod, BookingStatus.PENDING));
                             StudentBookingData.write();
-                            
+
+                            PaymentData.studentPayments.add(new StudentPayment(paymentID, HostelManagementSystem.studentlogin.getUsername(),
+                                    roomPrice, "Payment", paymentDate));
+                            PaymentData.write();
+
                             JOptionPane.showMessageDialog(hostelbooking,
-                                    "Congratulations! Your room number is " + roomNumber);
+                                    "Congratulations! Your have booked a room. However, your booking will be confirmed only when admin is approved your application.");
                             double balance = studentBalance - roomPrice;
                             HostelManagementSystem.studentlogin.setStudentBalance(balance);
                             StudentData.write();
@@ -287,36 +314,18 @@ public final class HostelBooking extends javax.swing.JFrame {
                             int a = JOptionPane.showConfirmDialog(hostelbooking, "Booking failed due to insufficient balance."
                                     + " Please top up your APCard to proceed. Do you want to top up your balance now?", "Top Up Confirmation", YES_NO_OPTION);
                             if (a == JOptionPane.YES_OPTION) {
-                                try {
-                                    String topUpAmount = JOptionPane.showInputDialog(hostelbooking,
-                                            "Insert amount that you want to top up into your APCard.");
-                                    Double amount = Double.parseDouble(topUpAmount);
-                                    if (amount <= 0) {
-                                        throw new Exception();
-
-                                    } else {
-                                        HostelManagementSystem.studentlogin.setStudentBalance(amount + HostelManagementSystem.studentlogin.getStudentBalance());
-                                        JOptionPane.showMessageDialog(hostelbooking, "You have successfully top tup RM"
-                                                + amount + " into your APCard.");
-                                        StudentData.write();
-
-                                    }
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(hostelbooking, "Transaction Failed due to invalid amount.");
-                                }
+                                StudentTransaction studentTransaction = new StudentTransaction();
+                                studentTransaction.setVisible(true);
+                                this.setVisible(false);
                             }
                         }
                     }
                 }
-
-            } else {
-                JOptionPane.showMessageDialog(hostelbooking,
-                        "You already booked a room. You can only book another room after your contract end.");
             }
-
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(hostelbooking,
-                    "Sorry, there are no available " + selectedRoomType + " at this time.");
+                    "Sorry, no available " + selectedRoomType + " at this time.");
         }
 
     }//GEN-LAST:event_confirmButtonActionPerformed

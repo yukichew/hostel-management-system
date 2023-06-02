@@ -3,6 +3,7 @@ package javaassignment;
 import java.awt.Image;
 import static javaassignment.HostelManagementSystem.loginf;
 import static javaassignment.HostelManagementSystem.mainPage;
+import static javaassignment.HostelManagementSystem.alogin;
 import javaassignment.student.studentservices.RoomData;
 import javaassignment.student.studentservices.StudentData;
 import javax.swing.ImageIcon;
@@ -15,7 +16,7 @@ public class MainPage extends javax.swing.JFrame {
 
     public MainPage() {
         initComponents();
-        scaleImage();       
+        scaleImage();
         StudentData.read();
         RoomData.read();
     }
@@ -141,11 +142,11 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
-        // TODO add your handling code here:
+        mainPage.setVisible(false);
+        alogin.setVisible(true);
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void studentLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentLoginButtonActionPerformed
-        // TODO add your handling code here:
         mainPage.setVisible(false);
         loginf.setVisible(true);
     }//GEN-LAST:event_studentLoginButtonActionPerformed

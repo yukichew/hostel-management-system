@@ -106,11 +106,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="iconImage">
-          <Properties>
-            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[200, 190]"/>
-            </Property>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
