@@ -1,9 +1,12 @@
 package javaassignment.student;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javaassignment.HostelManagementSystem;
 import javaassignment.model.Room;
 import javaassignment.model.StudentBooking;
+import javaassignment.model.StudentPayment;
+import javaassignment.student.studentservices.PaymentData;
 import javaassignment.student.studentservices.RoomData;
 import javaassignment.student.studentservices.StudentBookingData;
 import javaassignment.student.studentservices.StudentData;
@@ -231,7 +234,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
 
                 if (year < 1) {
                     JOptionPane.showMessageDialog(studentHistoryPanel, "The minimum year is 1 year.");
-                    
+
                 } else {
                     double studentBalance = HostelManagementSystem.studentlogin.getStudentBalance();
                     Room room = RoomData.checkRoom(studentBooking.getRoomID());
@@ -248,11 +251,22 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
 
                         JOptionPane.showMessageDialog(studentHistoryPanel, "You have successfully extended your contract period.");
                         getApplicationHistory();
+
+                        int paymentId = PaymentData.getLastPaymentID();
+                        int paymentID = ++paymentId;
+                        String paymentDetails = "Extend Contract Payment for " + room.getRoomType().getName();
+                        LocalDateTime date = LocalDateTime.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                        String paymentDate = date.format(formatter);
                         
+                        PaymentData.studentPayments.add(new StudentPayment(paymentID, HostelManagementSystem.studentlogin.getUsername(),
+                                roomPrice, paymentDetails, paymentDate));
+                        PaymentData.write();
+
                     } else {
                         int a = JOptionPane.showConfirmDialog(studentHistoryPanel, "Booking failed due to insufficient balance."
                                 + " Please top up your APCard to proceed. Do you want to top up your balance now?", "Top Up Confirmation", YES_NO_OPTION);
-                        
+
                         if (a == JOptionPane.YES_OPTION) {
                             StudentTransaction studentTransaction = new StudentTransaction();
                             studentTransaction.setVisible(true);
@@ -261,7 +275,7 @@ public class StudentApplicationHistory extends javax.swing.JFrame {
                     }
 
                 }
-                
+
             } else {
                 JOptionPane.showMessageDialog(studentHistoryPanel, "There's no active room right now.");
             }
