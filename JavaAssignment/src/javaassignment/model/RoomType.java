@@ -19,4 +19,5 @@ public enum RoomType {
     public String getRoomType() {
         return this.name;
     }
+    
 }

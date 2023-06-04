@@ -115,5 +115,14 @@ public class RoomData {
         }
         return count;
     }
+    
+    public static int last_roomNumber() {
+        int roomNumber = 0;
+        for (int i = 0; i < rooms.size(); i++) {
+            Room roomID = rooms.get(i);
+            roomNumber = roomID.getRoomNumber();
+        }
+        return roomNumber;
+    }
 
 }

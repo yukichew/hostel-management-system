@@ -293,78 +293,48 @@ public class StudentRegister extends javax.swing.JFrame {
                 throw new Exception();
 
             } else {
-                if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0') {
+                if (studentContact.length() < 10 || studentContact.length() > 11 || studentContact.charAt(0) != '0' || !studentContact.matches("\\d+")) {
                     JOptionPane.showMessageDialog(Register, "Invalid contact number. Please enter a valid phone number with 10 or 11 digits. "
                             + "Please ensure that the number is in the format of 0XXXXXXXXX or 0XXXXXXXX.");
 
                 } else {
 
-                    Boolean checkContact = true;
-                    for (int a = 0; a < studentContact.length(); a++) {
-                        if (a == 0 && studentContact.charAt(a) == '-') {
-                            continue;
-                        }
+                    if (studentNIC.length() != 12 || !studentNIC.matches("\\d+")) {
+                        JOptionPane.showMessageDialog(Register, "Please enter your NIC correctly.");
 
-                        if (!Character.isDigit(studentContact.charAt(a))) {
-                            checkContact = false;
-                            JOptionPane.showMessageDialog(Register, "Invalid contact number. Please enter a valid phone number with 10 or 11 digits. "
-                                    + "Please ensure that the number is in the format of 0XXXXXXXXX or 0XXXXXXXX.");
-                            break;
-                        }
-                    }
+                    } else {
+                        Student found = StudentData.checkStudentID(studentID);
 
-                    if (checkContact) {
+                        if (found == null) {
+                            StudentData.students.add(new Student(studentID, studentName,
+                                    studentNIC, studentPassword, studentGender, studentContact, studentAddress, studentBalance));
+                            StudentData.write();
 
-                        if (studentNIC.length() != 12) {
-                            JOptionPane.showMessageDialog(Register, "Please enter your NIC correctly.");
+                            JOptionPane.showMessageDialog(Register,
+                                    "Congratulations! You are now a member of APU Hostel Management System.");
+
+                            StudentLogin loginf = new StudentLogin();
+                            loginf.setVisible(true);
+                            this.setVisible(false);
+
+                            tfstudentName.setText("");
+                            tfstudentID.setText("");
+                            tfstudentContact.setText("");
+                            tfstudentNIC.setText("");
+                            tfstudentPassword.setText("");
+                            tfstudentAddress.setText("");
+                            gender.clearSelection();
+                            this.setVisible(false);
 
                         } else {
-                            Boolean checkNIC = true;
-                            for (int a = 0; a < studentNIC.length(); a++) {
-                                if (a == 0 && studentNIC.charAt(a) == '-') {
-                                    continue;
-                                }
-
-                                if (!Character.isDigit(studentNIC.charAt(a))) {
-                                    checkContact = false;
-                                    JOptionPane.showMessageDialog(Register, "Please enter a valid NIC.");
-                                    break;
-                                }
-                            }
-
-                            if (checkNIC) {
-                                Student found = StudentData.checkStudentID(studentID);
-
-                                if (found == null) {
-                                    StudentData.students.add(new Student(studentID, studentName,
-                                            studentNIC, studentPassword, studentGender, studentContact, studentAddress, studentBalance));
-                                    StudentData.write();
-
-                                    JOptionPane.showMessageDialog(Register,
-                                            "Congratulations! You are now a member of APU Hostel Management System.");
-
-                                    StudentLogin loginf = new StudentLogin();
-                                    loginf.setVisible(true);
-                                    this.setVisible(false);
-
-                                    tfstudentName.setText("");
-                                    tfstudentID.setText("");
-                                    tfstudentContact.setText("");
-                                    tfstudentNIC.setText("");
-                                    tfstudentPassword.setText("");
-                                    tfstudentAddress.setText("");
-                                    gender.clearSelection();
-                                    this.setVisible(false);
-
-                                } else {
-                                    JOptionPane.showMessageDialog(Register,
-                                            "You already have an account.");
-                                }
-
-                            }
+                            JOptionPane.showMessageDialog(Register,
+                                    "You already have an account.");
                         }
+
                     }
+
                 }
+
             }
 
         } catch (Exception ex) {

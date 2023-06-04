@@ -102,5 +102,30 @@ public class StudentBookingData {
         }
         return bookingID;
     }
+    
+    public static StudentBooking checkBooking(int bookingID) {
+        StudentBooking found = null;
+        for (int i = 0; i < studentsBooking.size(); i++) {
+            StudentBooking c = studentsBooking.get(i);
+            if (bookingID == c.getBookingID()) {
+                found = c;
+                break;
+            }
+        }
+        return found;
+    }
+   
+    
+    public static ArrayList<StudentBooking> getPendingBookings() {
+       ArrayList<StudentBooking> pendingBookings = new ArrayList<>();
+
+       for (StudentBooking sb : studentsBooking) {
+           if (sb.getBookingStatus() == BookingStatus.PENDING) {
+               pendingBookings.add(sb);
+           }
+       }
+
+       return pendingBookings;
+   }
 
 }
