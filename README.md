@@ -1,6 +1,6 @@
 # Hostel Management System
 
-This Hostel Management System is designed to help manage hostel rooms, students, and various operations associated with hostel management. It provides functionalities to add and view student information, allocate rooms, manage room occupancy, and maintain records. This system has been developed as part of the Object-Oriented Developement with Java (OODJ) assignment.
+This Hostel Management System is designed to help manage hostel rooms, students, and various operations associated with hostel management. It provides functionalities to add and view student information, allocate rooms, manage room occupancy, and maintain records. This system has been developed as part of the Object-Oriented Development with Java (OODJ) assignment.
 
 ## Prerequisites
 
